@@ -18,12 +18,24 @@ function removeLogEntry(rowIndex) {
     const entries = data.downloadLog || [];
     const removed = entries[rowIndex];
     const next = entries.filter((_, i) => i !== rowIndex);
-    chrome.storage.sync.set({ downloadLog: next }, () => {
-      if (removed && removed.id) {
-        chrome.storage.local.remove("thumb_" + removed.id);
-      }
-      load();
-    });
+
+    function cleanup() {
+      chrome.storage.sync.set({ downloadLog: next }, () => {
+        if (removed && removed.id) {
+          chrome.storage.local.remove("thumb_" + removed.id);
+        }
+        load();
+      });
+    }
+
+    if (removed && removed.id) {
+      chrome.downloads.removeFile(Number(removed.id), () => {
+        void chrome.runtime.lastError;
+        cleanup();
+      });
+    } else {
+      cleanup();
+    }
   });
 }
 
