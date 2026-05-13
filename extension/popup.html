@@ -11,21 +11,20 @@
       <img src="icons/logo.png" alt="HushDown" class="hd-logo" width="36" height="36" />
       <div class="hd-header-text">
         <h1 class="hd-title">HushDown</h1>
-        <p class="hd-sub">Silently saves downloads with a timestamped filename.</p>
+        <p class="hd-sub" data-i18n="headerSub"></p>
       </div>
-      <button type="button" id="helpBtn" class="hd-help-btn" title="How to use">?</button>
+      <button type="button" id="helpBtn" class="hd-help-btn" data-i18n-title="helpBtnTitle">?</button>
     </header>
 
     <section class="hd-section">
       <div class="hd-log-header">
-        <h2 class="hd-heading">Last 10 downloads</h2>
-        <button type="button" id="openDownloads" class="hd-btn hd-btn-sm" title="Open downloads folder">
-          Open folder
-        </button>
+        <h2 class="hd-heading" data-i18n="last10Heading"></h2>
+        <button type="button" id="openDownloads" class="hd-btn hd-btn-sm"
+          data-i18n="openFolderLabel" data-i18n-title="openFolderTitle"></button>
       </div>
       <ul id="log" class="hd-log"></ul>
-      <p id="logEmpty" class="hd-empty">No downloads yet.</p>
-      <a href="#" id="fullHistory" class="hd-full-history">Full download history</a>
+      <p id="logEmpty" class="hd-empty" data-i18n="logEmptyText"></p>
+      <a href="#" id="fullHistory" class="hd-full-history" data-i18n="fullHistoryLabel"></a>
     </section>
 
     <script src="popup.js"></script>

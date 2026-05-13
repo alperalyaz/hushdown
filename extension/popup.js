@@ -1,3 +1,14 @@
+const i18n = (key) => chrome.i18n.getMessage(key) || key;
+
+function applyI18n() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.textContent = i18n(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    el.title = i18n(el.dataset.i18nTitle);
+  });
+}
+
 const openDownloadsBtn = document.getElementById("openDownloads");
 const logEl = document.getElementById("log");
 const logEmptyEl = document.getElementById("logEmpty");
@@ -57,7 +68,7 @@ function renderLog(entries, thumbMap) {
     const del = document.createElement("button");
     del.className = "hd-log-del";
     del.textContent = "×";
-    del.title = "Remove from list";
+    del.title = i18n("removeFromList");
     del.addEventListener("click", (e) => {
       e.stopPropagation();
       removeLogEntry(rowIndex);
@@ -67,7 +78,7 @@ function renderLog(entries, thumbMap) {
     if (hasId) {
       li.dataset.downloadId = String(id);
       li.tabIndex = 0;
-      li.title = "Click to open file";
+      li.title = i18n("clickToOpen");
     }
     logEl.appendChild(li);
   });
@@ -118,4 +129,7 @@ document.getElementById("helpBtn").addEventListener("click", () => {
   chrome.tabs.create({ url: "https://alperalyaz.github.io/hushdown/" });
 });
 
-document.addEventListener("DOMContentLoaded", load);
+document.addEventListener("DOMContentLoaded", () => {
+  applyI18n();
+  load();
+});

@@ -1,0 +1,41 @@
+{
+  "extName": {
+    "message": "HushDown"
+  },
+  "extDescription": {
+    "message": "Silently saves every download with a timestamp-based filename (yyyyMMddHHmmss)."
+  },
+  "headerSub": {
+    "message": "Silently saves downloads with a timestamped filename."
+  },
+  "helpBtnTitle": {
+    "message": "How to use"
+  },
+  "last10Heading": {
+    "message": "Last 10 downloads"
+  },
+  "openFolderTitle": {
+    "message": "Open downloads folder"
+  },
+  "openFolderLabel": {
+    "message": "Open folder"
+  },
+  "logEmptyText": {
+    "message": "No downloads yet."
+  },
+  "fullHistoryLabel": {
+    "message": "Full download history"
+  },
+  "removeFromList": {
+    "message": "Remove from list"
+  },
+  "clickToOpen": {
+    "message": "Click to open file"
+  },
+  "downloadedFile": {
+    "message": "Downloaded file"
+  },
+  "notifDownloaded": {
+    "message": "Downloaded"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "extName": {
+    "message": "HushDown"
+  },
+  "extDescription": {
+    "message": "Her indirilen dosyayı zaman damgalı bir isimle (yyyyAAggSSddss) sessizce kaydeder."
+  },
+  "headerSub": {
+    "message": "İndirilen dosyaları zaman damgalı isimle sessizce kaydeder."
+  },
+  "helpBtnTitle": {
+    "message": "Nasıl kullanılır"
+  },
+  "last10Heading": {
+    "message": "Son 10 indirme"
+  },
+  "openFolderTitle": {
+    "message": "İndirilenler klasörünü aç"
+  },
+  "openFolderLabel": {
+    "message": "Klasörü aç"
+  },
+  "logEmptyText": {
+    "message": "Henüz kayıt yok."
+  },
+  "fullHistoryLabel": {
+    "message": "Tam indirme geçmişi"
+  },
+  "removeFromList": {
+    "message": "Listeden kaldır"
+  },
+  "clickToOpen": {
+    "message": "Tıklayınca dosya açılır"
+  },
+  "downloadedFile": {
+    "message": "İndirilen dosya"
+  },
+  "notifDownloaded": {
+    "message": "İndirildi"
+  }
+}

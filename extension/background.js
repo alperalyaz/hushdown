@@ -157,7 +157,7 @@ async function getImageInfo(filePath) {
 async function showDownloadDoneNotification(item) {
   const downloadId = item.id;
   const fileName =
-    (item.filename || "").split(/[/\\]/).pop() || "Downloaded file";
+    (item.filename || "").split(/[/\\]/).pop() || chrome.i18n.getMessage("downloadedFile");
   const nid = "hushdown-dl-" + downloadId;
   const extensionIcon = chrome.runtime.getURL("icons/icon128.png");
   const mime = (item.mime || "").toLowerCase();
@@ -175,7 +175,7 @@ async function showDownloadDoneNotification(item) {
     saveThumb(downloadId, imageInfo.thumbUrl);
   }
 
-  let messageParts = ["Downloaded"];
+  let messageParts = [chrome.i18n.getMessage("notifDownloaded")];
   if (imageInfo && imageInfo.width && imageInfo.height) {
     messageParts.push(imageInfo.width + "×" + imageInfo.height + " px");
   }
