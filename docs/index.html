@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HushDown — Hoş geldiniz</title>
+  <meta name="description" content="HushDown Chrome eklentisi kurulum rehberi. Bildirimleri açın, eklentiyi sabitleyin ve tam verimi alın." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e1117;
+      --surface: #161b25;
+      --surface2: #1e2535;
+      --border: #2a3547;
+      --text: #e8edf5;
+      --muted: #8a96aa;
+      --accent: #5b8def;
+      --accent2: #7aa3f5;
+      --orange: #f97316;
+      --green: #22c55e;
+      --radius: 14px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent2); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(91,141,239,.18), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(91,141,239,.25);
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: var(--accent2); }
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .02em;
+    }
+    .badge strong { color: var(--green); }
+
+    /* ── SECTIONS ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .section {
+      margin-top: 64px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-label .dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .section h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .section > p {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-body strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    .step-body p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .step-body code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 7px;
+      font-size: 13px;
+      font-family: ui-monospace, Consolas, monospace;
+      color: var(--text);
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .how-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+    }
+    .how-card .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .how-card strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .how-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FAQ ── */
+    .faq { display: flex; flex-direction: column; gap: 10px; }
+    .faq details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .faq summary {
+      padding: 16px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      font-size: 20px;
+      color: var(--muted);
+      transition: transform .2s;
+      font-weight: 300;
+    }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details[open] summary {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq .answer {
+      padding: 14px 20px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .faq .answer strong { color: var(--text); }
+    .faq .answer code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1px 6px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 540px) {
+      .hero { padding: 48px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="logo.png" alt="HushDown" class="hero-logo" />
+  <h1>Hoş geldiniz, <span>HushDown</span> kuruldu.</h1>
+  <p>İndirmeleriniz artık otomatik olarak zaman damgalı adlarla kaydediliyor. Tam verimi almak için aşağıdaki adımları tamamlayın.</p>
+  <div class="badge">v1.3 &nbsp;·&nbsp; <strong>Aktif</strong></div>
+</div>
+
+<div class="container">
+
+  <!-- ── ADIM 1: Sabitleme ── -->
+  <div class="section">
+    <div class="section-label"><span class="dot"></span>Kurulum — 1. Adım</div>
+    <h2>Eklentiyi araç çubuğuna sabitleyin</h2>
+    <p>Sabitlemezseniz eklenti gizli kalır; tıklamak için her seferinde 🧩 menüsünü açmanız gerekir.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Yapboz parçası simgesine tıklayın</strong>
+          <p>Chrome adres çubuğunun sağında <strong>🧩</strong> simgesi bulunur. Tıklayarak eklenti listesini açın.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>HushDown'ı bulun</strong>
+          <p>Listede <strong>HushDown</strong> satırını bulun.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Raptiye simgesine tıklayın</strong>
+          <p>Satırın sağındaki 📌 ikonuna tıklayın. HushDown artık araç çubuğunda görünecek.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ADIM 2: Bildirimler ── -->
+  <div class="section">
+    <div class="section-label"><span class="dot"></span>Kurulum — 2. Adım</div>
+    <h2>Chrome bildirimlerine izin verin</h2>
+    <p>İndirme tamamlandığında önizlemeli bildirim alabilmek için Windows'un Chrome'a bildirim izni vermesi gerekir.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Windows Ayarları'nı açın</strong>
+          <p><code>Windows + I</code> tuşlarına basın veya Başlat menüsünden <strong>Ayarlar</strong>'ı açın.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Sistem → Bildirimler</strong>
+          <p><strong>Sistem</strong> bölümüne gidin, ardından <strong>Bildirimler</strong>'i seçin.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Google Chrome'u açık konuma getirin</strong>
+          <p>Uygulama listesinde <strong>Google Chrome</strong>'u bulun ve bildirimleri <strong>Açık</strong> olarak işaretleyin.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NASIL ÇALIŞIR ── -->
+  <div class="section">
+    <div class="section-label"><span class="dot"></span>Nasıl çalışır</div>
+    <h2>HushDown ne yapar?</h2>
+    <p>Basit, arka planda sessizce çalışır — hiçbir şey yapmanıza gerek yoktur.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="icon">⬇️</div>
+        <strong>Otomatik yeniden adlandırma</strong>
+        <p>Her indirmede dosya adı <code>yyyyMMddHHmmss</code> formatında zaman damgasıyla başlar. Uzantı (.png, .pdf…) korunur.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">🔔</div>
+        <strong>Önizlemeli bildirim</strong>
+        <p>İndirme tamamlanınca masaüstü bildirimi gösterilir. Görsellerde resmin kendisi önizleme olarak belirir.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">🗂️</div>
+        <strong>Son 10 indirme</strong>
+        <p>Eklenti açıldığında son 10 indirme listelenir. Satıra tıklayınca dosya açılır. Görsellerde küçük önizleme görünür.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">📁</div>
+        <strong>İndirme klasörü</strong>
+        <p>Dosyalar Chrome'un varsayılan İndirilenler klasörüne kaydedilir. Konumu <code>chrome://settings/downloads</code> üzerinden değiştirebilirsiniz.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SSS ── -->
+  <div class="section">
+    <div class="section-label"><span class="dot"></span>Sık sorulan sorular</div>
+    <h2>SSS</h2>
+    <br />
+    <div class="faq">
+      <details>
+        <summary>Eski dosya adlarım kaybolacak mı?</summary>
+        <div class="answer">Hayır. HushDown yalnızca <strong>yeni indirmeleri</strong> etkiler; diskinizde zaten bulunan dosyalara dokunmaz.</div>
+      </details>
+      <details>
+        <summary>İndirme konumunu nasıl değiştirebilirim?</summary>
+        <div class="answer">Chrome adres çubuğuna <code>chrome://settings/downloads</code> yazın. <strong>Konum</strong> alanından istediğiniz klasörü seçin. HushDown dosyayı her zaman bu varsayılan konuma kaydeder.</div>
+      </details>
+      <details>
+        <summary>Bildirim geliyor ama resim önizlemesi yok.</summary>
+        <div class="answer">
+          Önizleme için eklentinin yerel dosyalara erişmesi gerekir.<br /><br />
+          <strong>chrome://extensions</strong> → HushDown → <strong>Ayrıntılar</strong> → <strong>"Dosya URL'lerine erişime izin ver"</strong> seçeneğini açın.
+        </div>
+      </details>
+      <details>
+        <summary>Bildirimleri tamamen kapatmak istiyorum.</summary>
+        <div class="answer">Windows Ayarları → Sistem → Bildirimler → Google Chrome bölümünden Chrome bildirimlerini kapatabilirsiniz. Yalnızca indirme bildirimlerini değil tüm Chrome bildirimlerini kapatır; bu bir Chrome kısıtlamasıdır.</div>
+      </details>
+      <details>
+        <summary>Eklenti hangi izinleri kullanıyor?</summary>
+        <div class="answer">
+          <strong>downloads</strong> — İndirme dosya adını ayarlamak ve geçmişi okumak için.<br />
+          <strong>downloads.open</strong> — Listeden dosya açmak için.<br />
+          <strong>storage</strong> — İndirme kaydını ve küçük resimleri saklamak için.<br />
+          <strong>notifications</strong> — Masaüstü bildirimi göstermek için.<br />
+          <strong>offscreen</strong> — Resim önizlemesi üretmek için (arka planda, görünmez).<br />
+          <strong>file:///*</strong> — İndirilen görselin önizlemesini oluşturmak için yerel dosyaya erişim.
+        </div>
+      </details>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  HushDown &copy; 2026 &nbsp;·&nbsp;
+  <a href="https://github.com/YOUR_USERNAME/HushDown" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+</body>
+</html>

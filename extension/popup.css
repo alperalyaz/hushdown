@@ -1,0 +1,262 @@
+:root {
+  color-scheme: dark light;
+  --bg: #14161a;
+  --surface: #1c2028;
+  --border: #2a3140;
+  --text: #e8eaef;
+  --muted: #9aa3b2;
+  --accent: #5b8def;
+  --accent-hover: #7aa3f5;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  max-width: 380px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hd-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hd-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.hd-header-text {
+  min-width: 0;
+}
+
+.hd-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.hd-sub {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.hd-section {
+  padding: 12px 16px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hd-section:last-of-type {
+  border-bottom: none;
+}
+
+.hd-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.hd-btn-primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #0b0d10;
+  font-weight: 600;
+}
+
+.hd-btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.hd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.hd-actions-single {
+  margin-top: 0;
+}
+
+.hd-heading {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hd-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.hd-log-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+.hd-log-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 5px;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.hd-log-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.hd-log-del {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.hd-log-row:hover .hd-log-del {
+  opacity: 1;
+}
+
+.hd-log-del:hover {
+  color: #e05c5c;
+  background: rgba(224, 92, 92, 0.12);
+}
+
+.hd-log-row[data-download-id] {
+  cursor: pointer;
+  outline: none;
+}
+
+.hd-log-row[data-download-id]:hover {
+  border-color: var(--accent);
+  background: #222831;
+}
+
+.hd-log-row[data-download-id]:focus-visible {
+  box-shadow: 0 0 0 2px rgba(91, 141, 239, 0.35);
+}
+
+.hd-log-name {
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.hd-log-time {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.hd-empty {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hd-full-history {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hd-full-history:hover {
+  text-decoration: underline;
+  color: var(--accent-hover);
+}
+
+.hd-details {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.hd-details-summary {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+}
+
+.hd-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.hd-details[open] .hd-details-summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.hd-help {
+  padding: 10px 12px 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.hd-help-p {
+  margin: 0 0 10px;
+}
+
+.hd-help-p:last-child {
+  margin-bottom: 0;
+}
+
+.hd-help-p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.hd-mono {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 10.5px;
+  color: var(--text);
+  word-break: break-all;
+}

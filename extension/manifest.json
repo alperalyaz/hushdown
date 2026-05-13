@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "HushDown",
+  "version": "1.3.0",
+  "description": "İndirmeleri sessizce yyyyMMddHHmmss biçiminde zaman damgalı adla kaydeder.",
+  "permissions": ["downloads", "downloads.open", "storage", "notifications", "offscreen"],
+  "host_permissions": ["file:///*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "HushDown",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }
+}

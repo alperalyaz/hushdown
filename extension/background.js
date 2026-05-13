@@ -1,0 +1,256 @@
+const DEFAULT_SETTINGS = { downloadLog: [] };
+
+let settingsCache = {
+  downloadLog: [],
+};
+
+function applyStorageResult(result) {
+  settingsCache.downloadLog = Array.isArray(result.downloadLog)
+    ? result.downloadLog
+    : [];
+}
+
+chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
+  applyStorageResult(result);
+});
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === "install") {
+    chrome.tabs.create({ url: "https://YOUR_USERNAME.github.io/HushDown/" });
+  }
+  chrome.runtime.setUninstallURL("https://YOUR_GOOGLE_FORMS_URL");
+});
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName !== "sync") return;
+  if (changes.downloadLog) {
+    settingsCache.downloadLog = Array.isArray(changes.downloadLog.newValue)
+      ? changes.downloadLog.newValue
+      : [];
+  }
+});
+
+function pad2(n) {
+  return String(n).padStart(2, "0");
+}
+
+function formatTimestampStamp(date = new Date()) {
+  return (
+    String(date.getFullYear()) +
+    pad2(date.getMonth() + 1) +
+    pad2(date.getDate()) +
+    pad2(date.getHours()) +
+    pad2(date.getMinutes()) +
+    pad2(date.getSeconds())
+  );
+}
+
+function getExtensionFromDownload(item) {
+  const extFromName = (name) => {
+    if (!name) return "";
+    const base = name.split(/[/\\]/).pop() || "";
+    const m = base.match(/\.([A-Za-z0-9]{1,8})$/);
+    return m ? m[1].toLowerCase() : "";
+  };
+
+  let ext = extFromName(item.filename);
+  if (ext) return ext;
+
+  try {
+    const url = item.finalUrl || item.url || "";
+    const pathname = new URL(url).pathname;
+    ext = extFromName(pathname);
+    if (ext) return ext;
+  } catch (_) {
+    /* ignore */
+  }
+
+  const mimeMap = {
+    "image/jpeg": "jpg",
+    "image/jpg": "jpg",
+    "image/png": "png",
+    "image/gif": "gif",
+    "image/webp": "webp",
+    "image/svg+xml": "svg",
+    "application/pdf": "pdf",
+    "application/zip": "zip",
+    "application/x-zip-compressed": "zip",
+    "text/plain": "txt",
+    "text/csv": "csv",
+  };
+  const mime = item.mime ? item.mime.split(";")[0].trim().toLowerCase() : "";
+  if (mime && mimeMap[mime]) return mimeMap[mime];
+
+  return "";
+}
+
+chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
+  const ext = getExtensionFromDownload(downloadItem);
+  const stamp = formatTimestampStamp();
+  const filename = ext ? `${stamp}.${ext}` : stamp;
+
+  suggest({
+    filename,
+    conflictAction: "uniquify",
+  });
+});
+
+function pushDownloadLog(entry) {
+  const prev = settingsCache.downloadLog || [];
+  const next = [entry, ...prev].slice(0, 10);
+  const removedIds = prev.slice(9).map((e) => e.id).filter(Boolean);
+  settingsCache.downloadLog = next;
+  chrome.storage.sync.set({ downloadLog: next });
+  if (removedIds.length) {
+    const keysToRemove = removedIds.map((id) => "thumb_" + id);
+    chrome.storage.local.remove(keysToRemove);
+  }
+}
+
+function saveThumb(downloadId, thumbUrl) {
+  chrome.storage.local.set({ ["thumb_" + downloadId]: thumbUrl });
+}
+
+async function ensureOffscreen() {
+  const contexts = await chrome.runtime.getContexts({
+    contextTypes: ["OFFSCREEN_DOCUMENT"],
+  });
+  if (contexts.length > 0) return;
+  await chrome.offscreen.createDocument({
+    url: "offscreen.html",
+    reasons: ["BLOBS"],
+    justification: "Convert downloaded image to data URL for notification",
+  });
+}
+
+function filePathToFileUrl(filepath) {
+  return "file:///" + filepath.replace(/\\/g, "/");
+}
+
+function formatBytes(bytes) {
+  if (!bytes || bytes <= 0) return "";
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+}
+
+async function getImageInfo(filePath) {
+  try {
+    await ensureOffscreen();
+    return await new Promise((resolve) => {
+      chrome.runtime.sendMessage(
+        { type: "image-to-dataurl", fileUrl: filePathToFileUrl(filePath) },
+        (resp) => {
+          if (chrome.runtime.lastError || !resp || resp.error) {
+            resolve(null);
+          } else {
+            resolve(resp);
+          }
+        },
+      );
+    });
+  } catch {
+    return null;
+  }
+}
+
+async function showDownloadDoneNotification(item) {
+  const downloadId = item.id;
+  const fileName =
+    (item.filename || "").split(/[/\\]/).pop() || "İndirilen dosya";
+  const nid = "hushdown-dl-" + downloadId;
+  const extensionIcon = chrome.runtime.getURL("icons/icon128.png");
+  const mime = (item.mime || "").toLowerCase();
+  const isImage = mime.startsWith("image/");
+
+  const sizeStr = formatBytes(item.fileSize);
+
+  let imageInfo = null;
+  if (isImage && item.filename) {
+    imageInfo = await getImageInfo(item.filename);
+  }
+
+  const imageDataUrl = imageInfo && imageInfo.dataUrl ? imageInfo.dataUrl : null;
+  if (imageInfo && imageInfo.thumbUrl) {
+    saveThumb(downloadId, imageInfo.thumbUrl);
+  }
+
+  let messageParts = ["İndirildi"];
+  if (imageInfo && imageInfo.width && imageInfo.height) {
+    messageParts.push(imageInfo.width + "×" + imageInfo.height + " px");
+  }
+  if (sizeStr) messageParts.push(sizeStr);
+  const message = messageParts.join(" · ");
+
+  if (imageDataUrl) {
+    chrome.notifications.create(
+      nid,
+      {
+        type: "image",
+        iconUrl: extensionIcon,
+        imageUrl: imageDataUrl,
+        title: fileName,
+        message: message,
+        priority: 2,
+      },
+      () => {
+        if (chrome.runtime.lastError) {
+          chrome.notifications.create(
+            nid,
+            {
+              type: "basic",
+              iconUrl: extensionIcon,
+              title: fileName,
+              message: message,
+              priority: 2,
+            },
+            () => void chrome.runtime.lastError,
+          );
+        }
+      },
+    );
+  } else {
+    chrome.notifications.create(
+      nid,
+      {
+        type: "basic",
+        iconUrl: extensionIcon,
+        title: fileName,
+        message: message,
+        priority: 2,
+      },
+      () => void chrome.runtime.lastError,
+    );
+  }
+}
+
+chrome.downloads.onChanged.addListener((delta) => {
+  if (!delta.state || delta.state.current !== "complete") return;
+
+  chrome.downloads.search({ id: delta.id }, (results) => {
+    if (chrome.runtime.lastError || !results || !results.length) return;
+    const item = results[0];
+    const fullPath = item.filename || "";
+    const name = fullPath.split(/[/\\]/).pop() || "indirilen";
+    const timeLabel = new Date().toLocaleString("tr-TR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    pushDownloadLog({ id: item.id, name, time: timeLabel });
+    showDownloadDoneNotification(item);
+  });
+});
+
+chrome.notifications.onClicked.addListener((notificationId) => {
+  const m = /^hushdown-dl-(\d+)/.exec(notificationId);
+  if (!m) return;
+  const downloadId = Number(m[1]);
+  if (!Number.isFinite(downloadId)) return;
+  chrome.downloads.show(downloadId, () => {
+    void chrome.runtime.lastError;
+  });
+});
