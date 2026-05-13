@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,24 +11,21 @@
       <img src="icons/logo.png" alt="HushDown" class="hd-logo" width="36" height="36" />
       <div class="hd-header-text">
         <h1 class="hd-title">HushDown</h1>
-        <p class="hd-sub">İndirmeleri sessizce zaman damgalı dosya adıyla kaydeder.</p>
+        <p class="hd-sub">Silently saves downloads with a timestamped filename.</p>
       </div>
-      <button type="button" id="helpBtn" class="hd-help-btn" title="Nasıl kullanılır">?</button>
+      <button type="button" id="helpBtn" class="hd-help-btn" title="How to use">?</button>
     </header>
 
     <section class="hd-section">
-      <div class="hd-actions hd-actions-single">
-        <button type="button" id="openDownloads" class="hd-btn hd-btn-primary">
-          İndirilenler klasörünü aç
+      <div class="hd-log-header">
+        <h2 class="hd-heading">Last 10 downloads</h2>
+        <button type="button" id="openDownloads" class="hd-btn hd-btn-sm" title="Open downloads folder">
+          Open folder
         </button>
       </div>
-    </section>
-
-    <section class="hd-section">
-      <h2 class="hd-heading">Son 10 indirme</h2>
       <ul id="log" class="hd-log"></ul>
-      <p id="logEmpty" class="hd-empty">Henüz kayıt yok.</p>
-      <a href="#" id="fullHistory" class="hd-full-history">Tam indirme geçmişi</a>
+      <p id="logEmpty" class="hd-empty">No downloads yet.</p>
+      <a href="#" id="fullHistory" class="hd-full-history">Full download history</a>
     </section>
 
     <script src="popup.js"></script>

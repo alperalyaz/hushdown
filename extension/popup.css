@@ -96,30 +96,24 @@ body {
   font-size: 13px;
 }
 
-.hd-btn-primary {
-  background: var(--accent);
-  border-color: transparent;
-  color: #0b0d10;
-  font-weight: 600;
-}
 
-.hd-btn-primary:hover {
-  background: var(--accent-hover);
-}
-
-.hd-actions {
+.hd-log-header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
-
-.hd-actions-single { margin-top: 0; }
 
 .hd-heading {
-  margin: 0 0 8px;
+  margin: 0;
   font-size: 13px;
   font-weight: 600;
+}
+
+.hd-btn-sm {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 6px;
 }
 
 .hd-log {

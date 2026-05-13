@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "HushDown",
   "version": "1.3.0",
-  "description": "İndirmeleri sessizce yyyyMMddHHmmss biçiminde zaman damgalı adla kaydeder.",
+  "description": "Silently saves every download with a timestamp-based filename (yyyyMMddHHmmss).",
   "permissions": ["downloads", "downloads.open", "storage", "notifications", "offscreen"],
   "host_permissions": ["file:///*"],
   "background": {

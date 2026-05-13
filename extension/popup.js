@@ -57,7 +57,7 @@ function renderLog(entries, thumbMap) {
     const del = document.createElement("button");
     del.className = "hd-log-del";
     del.textContent = "×";
-    del.title = "Listeden kaldır";
+    del.title = "Remove from list";
     del.addEventListener("click", (e) => {
       e.stopPropagation();
       removeLogEntry(rowIndex);
@@ -67,7 +67,7 @@ function renderLog(entries, thumbMap) {
     if (hasId) {
       li.dataset.downloadId = String(id);
       li.tabIndex = 0;
-      li.title = "Tıklayınca dosya açılır";
+      li.title = "Click to open file";
     }
     logEl.appendChild(li);
   });

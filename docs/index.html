@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HushDown — Hoş geldiniz</title>
-  <meta name="description" content="HushDown Chrome eklentisi kurulum rehberi. Bildirimleri açın, eklentiyi sabitleyin ve tam verimi alın." />
+  <title>HushDown — Welcome</title>
+  <meta name="description" content="HushDown Chrome extension setup guide. Enable notifications, pin the extension, and get the most out of it." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -32,7 +32,6 @@
 
     a { color: var(--accent2); }
 
-    /* ── HERO ── */
     .hero {
       text-align: center;
       padding: 72px 24px 56px;
@@ -40,8 +39,7 @@
       border-bottom: 1px solid var(--border);
     }
     .hero-logo {
-      width: 80px;
-      height: 80px;
+      width: 80px; height: 80px;
       border-radius: 20px;
       margin-bottom: 24px;
       box-shadow: 0 8px 32px rgba(91,141,239,.25);
@@ -71,7 +69,6 @@
     }
     .badge strong { color: var(--green); }
 
-    /* ── SECTIONS ── */
     .container {
       max-width: 760px;
       margin: 0 auto;
@@ -104,7 +101,6 @@
     }
     .section > p { color: var(--muted); margin-bottom: 28px; }
 
-    /* ── STEPS ── */
     .steps { display: flex; flex-direction: column; gap: 12px; }
     .step {
       display: flex;
@@ -139,7 +135,6 @@
       color: var(--text);
     }
 
-    /* ── HOW IT WORKS ── */
     .how-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -155,7 +150,6 @@
     .how-card strong { display: block; font-size: 14px; margin-bottom: 6px; }
     .how-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
-    /* ── FAQ ── */
     .faq { display: flex; flex-direction: column; gap: 10px; }
     .faq details {
       background: var(--surface);
@@ -201,12 +195,11 @@
       color: var(--text);
     }
 
-    /* ── ABOUT ── */
     .about-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px 28px;
+      padding: 28px;
       font-size: 14px;
       color: var(--muted);
       line-height: 1.7;
@@ -215,7 +208,6 @@
     .about-card strong { color: var(--text); }
     .about-card a { color: var(--accent2); }
 
-    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 28px 24px;
@@ -236,190 +228,190 @@
 
 <div class="hero">
   <img src="logo.png" alt="HushDown" class="hero-logo" />
-  <h1>Hoş geldiniz, <span>HushDown</span> kuruldu.</h1>
-  <p>İndirmeleriniz artık otomatik olarak zaman damgalı adlarla kaydediliyor. Tam verimi almak için aşağıdaki adımları tamamlayın.</p>
-  <div class="badge">v1.3 &nbsp;·&nbsp; <strong>Aktif</strong></div>
+  <h1>Welcome — <span>HushDown</span> is installed.</h1>
+  <p>Your downloads are now automatically saved with a timestamped filename. Complete the steps below to get the most out of it.</p>
+  <div class="badge">v1.3 &nbsp;·&nbsp; <strong>Active</strong></div>
 </div>
 
 <div class="container">
 
-  <!-- ── ADIM 1: Sabitleme ── -->
+  <!-- Step 1: Pin -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Kurulum — 1. Adım</div>
-    <h2>Eklentiyi araç çubuğuna sabitleyin</h2>
-    <p>Sabitlemezseniz eklenti gizli kalır; tıklamak için her seferinde 🧩 menüsünü açmanız gerekir.</p>
+    <div class="section-label"><span class="dot"></span>Setup — Step 1</div>
+    <h2>Pin the extension to the toolbar</h2>
+    <p>Without pinning, HushDown stays hidden; you'd have to open the 🧩 menu every time.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-body">
-          <strong>Yapboz parçası simgesine tıklayın</strong>
-          <p>Chrome adres çubuğunun sağında <strong>🧩</strong> simgesi bulunur. Tıklayarak eklenti listesini açın.</p>
+          <strong>Click the puzzle piece icon</strong>
+          <p>Find the <strong>🧩</strong> icon on the right side of Chrome's address bar and click it to open the extension list.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <strong>HushDown'ı bulun</strong>
-          <p>Listede <strong>HushDown</strong> satırını bulun.</p>
+          <strong>Find HushDown</strong>
+          <p>Locate <strong>HushDown</strong> in the list.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <strong>Raptiye simgesine tıklayın</strong>
-          <p>Satırın sağındaki 📌 ikonuna tıklayın. HushDown artık araç çubuğunda görünecek.</p>
+          <strong>Click the pin icon</strong>
+          <p>Click the 📌 pin icon next to HushDown. It will now appear in your toolbar.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── ADIM 2: Bildirimler ── -->
+  <!-- Step 2: Notifications -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Kurulum — 2. Adım</div>
-    <h2>Chrome bildirimlerine izin verin</h2>
-    <p>İndirme tamamlandığında önizlemeli bildirim alabilmek için Windows'un Chrome'a bildirim izni vermesi gerekir.</p>
+    <div class="section-label"><span class="dot"></span>Setup — Step 2</div>
+    <h2>Allow Chrome notifications</h2>
+    <p>To receive preview notifications when a download completes, Windows needs permission to show Chrome notifications.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-body">
-          <strong>Windows Ayarları'nı açın</strong>
-          <p><code>Windows + I</code> tuşlarına basın veya Başlat menüsünden <strong>Ayarlar</strong>'ı açın.</p>
+          <strong>Open Windows Settings</strong>
+          <p>Press <code>Windows + I</code> or open <strong>Settings</strong> from the Start menu.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <strong>Sistem → Bildirimler</strong>
-          <p><strong>Sistem</strong> bölümüne gidin, ardından <strong>Bildirimler</strong>'i seçin.</p>
+          <strong>System → Notifications</strong>
+          <p>Go to <strong>System</strong>, then select <strong>Notifications</strong>.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <strong>Google Chrome'u açık konuma getirin</strong>
-          <p>Uygulama listesinde <strong>Google Chrome</strong>'u bulun ve bildirimleri <strong>Açık</strong> olarak işaretleyin.</p>
+          <strong>Turn on Google Chrome</strong>
+          <p>Find <strong>Google Chrome</strong> in the app list and set notifications to <strong>On</strong>.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── ADIM 3: Dosya URL İzni ── -->
+  <!-- Step 3: File URL access -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Kurulum — 3. Adım (isteğe bağlı)</div>
-    <h2>Görsel önizlemesini etkinleştirin</h2>
-    <p>İndirilen görsellerin bildirimde ve listede küçük önizlemeli görünmesi için eklentiye yerel dosya erişim izni verin.</p>
+    <div class="section-label"><span class="dot"></span>Setup — Step 3 (optional)</div>
+    <h2>Enable image previews</h2>
+    <p>To see inline previews of downloaded images in notifications and the download list, grant the extension access to local files.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-body">
-          <strong>Eklenti yönetimine gidin</strong>
-          <p>Chrome adres çubuğuna <code>chrome://extensions</code> yazın.</p>
+          <strong>Open extension management</strong>
+          <p>Type <code>chrome://extensions</code> in the address bar.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <strong>HushDown → Ayrıntılar</strong>
-          <p>HushDown kartındaki <strong>Ayrıntılar</strong> butonuna tıklayın.</p>
+          <strong>HushDown → Details</strong>
+          <p>Click the <strong>Details</strong> button on the HushDown card.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <strong>"Dosya URL'lerine erişime izin ver" seçeneğini açın</strong>
-          <p>Sayfayı aşağı kaydırın, bu seçeneği <strong>Açık</strong> konuma getirin.</p>
+          <strong>Enable "Allow access to file URLs"</strong>
+          <p>Scroll down and toggle <strong>Allow access to file URLs</strong> on.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── NASIL ÇALIŞIR ── -->
+  <!-- How it works -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Nasıl kullanılır</div>
-    <h2>HushDown ne yapar?</h2>
-    <p>Basit, arka planda sessizce çalışır — hiçbir şey yapmanıza gerek yoktur.</p>
+    <div class="section-label"><span class="dot"></span>How it works</div>
+    <h2>What does HushDown do?</h2>
+    <p>It runs quietly in the background — no action needed from you.</p>
     <div class="how-grid">
       <div class="how-card">
         <div class="icon">⬇️</div>
-        <strong>Otomatik yeniden adlandırma</strong>
-        <p>Her indirmede dosya adı <code>yyyyMMddHHmmss</code> formatında zaman damgasıyla başlar. Uzantı (.png, .pdf…) korunur.</p>
+        <strong>Automatic renaming</strong>
+        <p>Every download is saved with a <code>yyyyMMddHHmmss</code> timestamp prefix. The original file extension (.png, .pdf…) is preserved.</p>
       </div>
       <div class="how-card">
         <div class="icon">🔔</div>
-        <strong>Önizlemeli bildirim</strong>
-        <p>İndirme tamamlanınca masaüstü bildirimi gösterilir. Görsellerde resmin kendisi önizleme olarak belirir. Bildirime tıklanınca dosya klasörde gösterilir.</p>
+        <strong>Preview notifications</strong>
+        <p>A desktop notification appears when a download completes. For images, the picture itself is shown as a preview. Click the notification to reveal the file in its folder.</p>
       </div>
       <div class="how-card">
         <div class="icon">🗂️</div>
-        <strong>Son 10 indirme</strong>
-        <p>Eklenti açıldığında son 10 indirme listelenir. Satıra tıklayınca dosya açılır. Görsellerde küçük önizleme görünür. × ile kayıt listeden silinir.</p>
+        <strong>Last 10 downloads</strong>
+        <p>Open the extension to see the last 10 downloads. Click a row to open the file. Images show a small thumbnail. Use × to remove an entry from the list.</p>
       </div>
       <div class="how-card">
         <div class="icon">📁</div>
-        <strong>İndirme klasörü</strong>
-        <p>Dosyalar Chrome'un varsayılan İndirilenler klasörüne kaydedilir. Konumu <code>chrome://settings/downloads</code> üzerinden değiştirebilirsiniz.</p>
+        <strong>Download folder</strong>
+        <p>Files are saved to Chrome's default Downloads folder. Change it anytime via <code>chrome://settings/downloads</code>.</p>
       </div>
     </div>
   </div>
 
-  <!-- ── SSS ── -->
+  <!-- FAQ -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Sık sorulan sorular</div>
-    <h2>SSS</h2>
+    <div class="section-label"><span class="dot"></span>FAQ</div>
+    <h2>Frequently asked questions</h2>
     <br />
     <div class="faq">
       <details>
-        <summary>Eski dosya adlarım kaybolacak mı?</summary>
-        <div class="answer">Hayır. HushDown yalnızca <strong>yeni indirmeleri</strong> etkiler; diskinizde zaten bulunan dosyalara dokunmaz.</div>
+        <summary>Will my existing files be affected?</summary>
+        <div class="answer">No. HushDown only affects <strong>new downloads</strong>. Files already on your disk are never touched.</div>
       </details>
       <details>
-        <summary>İndirme konumunu nasıl değiştirebilirim?</summary>
-        <div class="answer">Chrome adres çubuğuna <code>chrome://settings/downloads</code> yazın. <strong>Konum</strong> alanından istediğiniz klasörü seçin. HushDown dosyayı her zaman bu varsayılan konuma kaydeder.</div>
+        <summary>How do I change the download location?</summary>
+        <div class="answer">Type <code>chrome://settings/downloads</code> in the address bar and change the <strong>Location</strong>. HushDown always saves files to Chrome's current default download folder.</div>
       </details>
       <details>
-        <summary>Bildirim geliyor ama resim önizlemesi yok.</summary>
+        <summary>I get a notification but no image preview.</summary>
         <div class="answer">
-          Önizleme için eklentinin yerel dosyalara erişmesi gerekir.<br /><br />
-          <strong>chrome://extensions</strong> → HushDown → <strong>Ayrıntılar</strong> → <strong>"Dosya URL'lerine erişime izin ver"</strong> seçeneğini açın.
+          Preview requires local file access.<br /><br />
+          Go to <strong>chrome://extensions</strong> → HushDown → <strong>Details</strong> → enable <strong>"Allow access to file URLs"</strong>.
         </div>
       </details>
       <details>
-        <summary>Bildirimleri tamamen kapatmak istiyorum.</summary>
-        <div class="answer">Windows Ayarları → Sistem → Bildirimler → Google Chrome bölümünden Chrome bildirimlerini kapatabilirsiniz. Bu tüm Chrome bildirimlerini kapatır; yalnızca HushDown bildirimlerini seçici olarak kapatmak mümkün değildir.</div>
+        <summary>Can I turn off notifications?</summary>
+        <div class="answer">Yes — go to Windows Settings → System → Notifications → Google Chrome and turn it off. Note that this disables all Chrome notifications, not just HushDown's.</div>
       </details>
       <details>
-        <summary>Eklenti hangi izinleri kullanıyor?</summary>
+        <summary>What permissions does HushDown use?</summary>
         <div class="answer">
-          <strong>downloads</strong> — İndirme dosya adını ayarlamak ve geçmişi okumak için.<br />
-          <strong>downloads.open</strong> — Listeden dosya açmak için.<br />
-          <strong>storage</strong> — İndirme kaydını ve küçük resimleri saklamak için.<br />
-          <strong>notifications</strong> — Masaüstü bildirimi göstermek için.<br />
-          <strong>offscreen</strong> — Resim önizlemesi üretmek için (arka planda, görünmez).<br />
-          <strong>file:///*</strong> — İndirilen görselin önizlemesini oluşturmak için yerel dosyaya erişim.
+          <strong>downloads</strong> — Set filenames and read download history.<br />
+          <strong>downloads.open</strong> — Open files from the list.<br />
+          <strong>storage</strong> — Save the download log and thumbnails.<br />
+          <strong>notifications</strong> — Show desktop notifications.<br />
+          <strong>offscreen</strong> — Generate image previews (invisible background page).<br />
+          <strong>file:///*</strong> — Read downloaded images to generate previews (optional, user-granted).
         </div>
       </details>
     </div>
   </div>
 
-  <!-- ── HAKKINDA ── -->
+  <!-- About -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Hakkında</div>
-    <h2>Bu eklenti hakkında</h2>
+    <div class="section-label"><span class="dot"></span>About</div>
+    <h2>About this extension</h2>
     <br />
     <div class="about-card">
       <p>
-        <strong>HushDown</strong>, <strong>Hidroteknik</strong> firmasının deneysel dijital çalışmaları neticesinde oluşmuştur.
-        Herhangi bir gelir modeli oluşturmak amacı taşımaz; tamamen iç ihtiyaçtan doğan, kamuyla paylaşılmış ücretsiz bir araçtır.
+        <strong>HushDown</strong> is an experimental digital project by <strong>Hidroteknik</strong>.
+        It is free, carries no commercial intent, and was open-sourced for anyone who finds it useful.
       </p>
       <p>
-        Proje geliştiricisi: <strong>Alper Alyaz</strong> (Hidroteknik adına)
+        Developer: <strong>Alper Alyaz</strong> on behalf of Hidroteknik
       </p>
       <p>
-        Soru, görüş ve önerileriniz için:
+        Questions, feedback, and suggestions:
         <a href="mailto:hushdown@hidroteknik.com.tr">hushdown@hidroteknik.com.tr</a>
       </p>
       <p>
-        Kaynak kodu:
+        Source code:
         <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">github.com/alperalyaz/hushdown</a>
       </p>
     </div>
@@ -429,7 +421,7 @@
 
 <footer>
   &copy; 2026 Hidroteknik &nbsp;·&nbsp;
-  Geliştirici: Alper Alyaz &nbsp;·&nbsp;
+  Developer: Alper Alyaz &nbsp;·&nbsp;
   <a href="mailto:hushdown@hidroteknik.com.tr">hushdown@hidroteknik.com.tr</a> &nbsp;·&nbsp;
   <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">GitHub</a>
 </footer>
