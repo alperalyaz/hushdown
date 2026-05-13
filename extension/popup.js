@@ -1,7 +1,6 @@
 const openDownloadsBtn = document.getElementById("openDownloads");
 const logEl = document.getElementById("log");
 const logEmptyEl = document.getElementById("logEmpty");
-const helpDetailsEl = document.getElementById("helpDetails");
 
 function removeLogEntry(rowIndex) {
   chrome.storage.sync.get({ downloadLog: [] }, (data) => {
@@ -115,17 +114,8 @@ document.getElementById("fullHistory").addEventListener("click", (e) => {
   chrome.tabs.create({ url: "chrome://downloads/" });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  load();
-  try {
-    const opened = sessionStorage.getItem("hd_help_open");
-    if (opened === "1" && helpDetailsEl) {
-      helpDetailsEl.open = true;
-    }
-    helpDetailsEl?.addEventListener("toggle", () => {
-      sessionStorage.setItem("hd_help_open", helpDetailsEl.open ? "1" : "0");
-    });
-  } catch (_) {
-    /* ignore */
-  }
+document.getElementById("helpBtn").addEventListener("click", () => {
+  chrome.tabs.create({ url: "https://alperalyaz.github.io/hushdown/" });
 });
+
+document.addEventListener("DOMContentLoaded", load);

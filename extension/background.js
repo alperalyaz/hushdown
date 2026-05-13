@@ -16,9 +16,9 @@ chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
 
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === "install") {
-    chrome.tabs.create({ url: "https://YOUR_USERNAME.github.io/HushDown/" });
+    chrome.tabs.create({ url: "https://alperalyaz.github.io/hushdown/" });
   }
-  chrome.runtime.setUninstallURL("https://YOUR_GOOGLE_FORMS_URL");
+  chrome.runtime.setUninstallURL("https://docs.google.com/forms/d/e/1FAIpQLScXM4JdMBO0hhssBI7sNwtXIVdveTn1_I_Qp1AwuIW-n229Ow/viewform");
 });
 
 chrome.storage.onChanged.addListener((changes, areaName) => {

@@ -17,7 +17,6 @@
       --muted: #8a96aa;
       --accent: #5b8def;
       --accent2: #7aa3f5;
-      --orange: #f97316;
       --green: #22c55e;
       --radius: 14px;
     }
@@ -79,9 +78,7 @@
       padding: 0 24px 80px;
     }
 
-    .section {
-      margin-top: 64px;
-    }
+    .section { margin-top: 64px; }
 
     .section-label {
       display: inline-flex;
@@ -105,17 +102,10 @@
       letter-spacing: -0.02em;
       margin-bottom: 8px;
     }
-    .section > p {
-      color: var(--muted);
-      margin-bottom: 28px;
-    }
+    .section > p { color: var(--muted); margin-bottom: 28px; }
 
     /* ── STEPS ── */
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .steps { display: flex; flex-direction: column; gap: 12px; }
     .step {
       display: flex;
       align-items: flex-start;
@@ -137,16 +127,8 @@
       align-items: center;
       justify-content: center;
     }
-    .step-body strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-    .step-body p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    .step-body strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    .step-body p { color: var(--muted); font-size: 14px; line-height: 1.5; }
     .step-body code {
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -169,20 +151,9 @@
       border-radius: var(--radius);
       padding: 22px 18px;
     }
-    .how-card .icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-    .how-card strong {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-    .how-card p {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .how-card .icon { font-size: 28px; margin-bottom: 12px; }
+    .how-card strong { display: block; font-size: 14px; margin-bottom: 6px; }
+    .how-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
 
     /* ── FAQ ── */
     .faq { display: flex; flex-direction: column; gap: 10px; }
@@ -212,9 +183,7 @@
       font-weight: 300;
     }
     .faq details[open] summary::after { transform: rotate(45deg); }
-    .faq details[open] summary {
-      border-bottom: 1px solid var(--border);
-    }
+    .faq details[open] summary { border-bottom: 1px solid var(--border); }
     .faq .answer {
       padding: 14px 20px;
       font-size: 14px;
@@ -232,6 +201,20 @@
       color: var(--text);
     }
 
+    /* ── ABOUT ── */
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .about-card p + p { margin-top: 12px; }
+    .about-card strong { color: var(--text); }
+    .about-card a { color: var(--accent2); }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -239,6 +222,7 @@
       text-align: center;
       font-size: 13px;
       color: var(--muted);
+      line-height: 1.8;
     }
     footer a { color: var(--muted); }
     footer a:hover { color: var(--text); }
@@ -319,9 +303,39 @@
     </div>
   </div>
 
+  <!-- ── ADIM 3: Dosya URL İzni ── -->
+  <div class="section">
+    <div class="section-label"><span class="dot"></span>Kurulum — 3. Adım (isteğe bağlı)</div>
+    <h2>Görsel önizlemesini etkinleştirin</h2>
+    <p>İndirilen görsellerin bildirimde ve listede küçük önizlemeli görünmesi için eklentiye yerel dosya erişim izni verin.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Eklenti yönetimine gidin</strong>
+          <p>Chrome adres çubuğuna <code>chrome://extensions</code> yazın.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>HushDown → Ayrıntılar</strong>
+          <p>HushDown kartındaki <strong>Ayrıntılar</strong> butonuna tıklayın.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>"Dosya URL'lerine erişime izin ver" seçeneğini açın</strong>
+          <p>Sayfayı aşağı kaydırın, bu seçeneği <strong>Açık</strong> konuma getirin.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ── NASIL ÇALIŞIR ── -->
   <div class="section">
-    <div class="section-label"><span class="dot"></span>Nasıl çalışır</div>
+    <div class="section-label"><span class="dot"></span>Nasıl kullanılır</div>
     <h2>HushDown ne yapar?</h2>
     <p>Basit, arka planda sessizce çalışır — hiçbir şey yapmanıza gerek yoktur.</p>
     <div class="how-grid">
@@ -333,12 +347,12 @@
       <div class="how-card">
         <div class="icon">🔔</div>
         <strong>Önizlemeli bildirim</strong>
-        <p>İndirme tamamlanınca masaüstü bildirimi gösterilir. Görsellerde resmin kendisi önizleme olarak belirir.</p>
+        <p>İndirme tamamlanınca masaüstü bildirimi gösterilir. Görsellerde resmin kendisi önizleme olarak belirir. Bildirime tıklanınca dosya klasörde gösterilir.</p>
       </div>
       <div class="how-card">
         <div class="icon">🗂️</div>
         <strong>Son 10 indirme</strong>
-        <p>Eklenti açıldığında son 10 indirme listelenir. Satıra tıklayınca dosya açılır. Görsellerde küçük önizleme görünür.</p>
+        <p>Eklenti açıldığında son 10 indirme listelenir. Satıra tıklayınca dosya açılır. Görsellerde küçük önizleme görünür. × ile kayıt listeden silinir.</p>
       </div>
       <div class="how-card">
         <div class="icon">📁</div>
@@ -371,7 +385,7 @@
       </details>
       <details>
         <summary>Bildirimleri tamamen kapatmak istiyorum.</summary>
-        <div class="answer">Windows Ayarları → Sistem → Bildirimler → Google Chrome bölümünden Chrome bildirimlerini kapatabilirsiniz. Yalnızca indirme bildirimlerini değil tüm Chrome bildirimlerini kapatır; bu bir Chrome kısıtlamasıdır.</div>
+        <div class="answer">Windows Ayarları → Sistem → Bildirimler → Google Chrome bölümünden Chrome bildirimlerini kapatabilirsiniz. Bu tüm Chrome bildirimlerini kapatır; yalnızca HushDown bildirimlerini seçici olarak kapatmak mümkün değildir.</div>
       </details>
       <details>
         <summary>Eklenti hangi izinleri kullanıyor?</summary>
@@ -387,11 +401,37 @@
     </div>
   </div>
 
+  <!-- ── HAKKINDA ── -->
+  <div class="section">
+    <div class="section-label"><span class="dot"></span>Hakkında</div>
+    <h2>Bu eklenti hakkında</h2>
+    <br />
+    <div class="about-card">
+      <p>
+        <strong>HushDown</strong>, <strong>Hidroteknik</strong> firmasının deneysel dijital çalışmaları neticesinde oluşmuştur.
+        Herhangi bir gelir modeli oluşturmak amacı taşımaz; tamamen iç ihtiyaçtan doğan, kamuyla paylaşılmış ücretsiz bir araçtır.
+      </p>
+      <p>
+        Proje geliştiricisi: <strong>Alper Alyaz</strong> (Hidroteknik adına)
+      </p>
+      <p>
+        Soru, görüş ve önerileriniz için:
+        <a href="mailto:hushdown@hidroteknik.com.tr">hushdown@hidroteknik.com.tr</a>
+      </p>
+      <p>
+        Kaynak kodu:
+        <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">github.com/alperalyaz/hushdown</a>
+      </p>
+    </div>
+  </div>
+
 </div>
 
 <footer>
-  HushDown &copy; 2026 &nbsp;·&nbsp;
-  <a href="https://github.com/YOUR_USERNAME/HushDown" target="_blank" rel="noopener">GitHub</a>
+  &copy; 2026 Hidroteknik &nbsp;·&nbsp;
+  Geliştirici: Alper Alyaz &nbsp;·&nbsp;
+  <a href="mailto:hushdown@hidroteknik.com.tr">hushdown@hidroteknik.com.tr</a> &nbsp;·&nbsp;
+  <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">GitHub</a>
 </footer>
 
 </body>
