@@ -1,0 +1,41 @@
+{
+  "extName": {
+    "message": "HushDown"
+  },
+  "extDescription": {
+    "message": "自动将每个下载文件以时间戳命名（yyyyMMddHHmmss）并静默保存。"
+  },
+  "headerSub": {
+    "message": "以时间戳文件名静默保存下载内容。"
+  },
+  "helpBtnTitle": {
+    "message": "使用说明"
+  },
+  "last10Heading": {
+    "message": "最近 10 次下载"
+  },
+  "openFolderTitle": {
+    "message": "打开下载文件夹"
+  },
+  "openFolderLabel": {
+    "message": "打开文件夹"
+  },
+  "logEmptyText": {
+    "message": "暂无下载记录。"
+  },
+  "fullHistoryLabel": {
+    "message": "完整下载历史"
+  },
+  "removeFromList": {
+    "message": "从列表中移除"
+  },
+  "clickToOpen": {
+    "message": "点击打开文件"
+  },
+  "downloadedFile": {
+    "message": "已下载文件"
+  },
+  "notifDownloaded": {
+    "message": "已下载"
+  }
+}
