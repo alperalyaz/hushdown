@@ -3,10 +3,10 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "自动将每个下载文件以时间戳命名（yyyyMMddHHmmss）并静默保存。"
+    "message": "静默将每个下载保存为 yyyyMMddHHmmss-原始文件名，在时间戳前缀后保留原始名称。"
   },
   "headerSub": {
-    "message": "以时间戳文件名静默保存下载内容。"
+    "message": "为每次下载添加 yyyyMMddHHmmss 时间戳前缀，并保留原始文件名。"
   },
   "helpBtnTitle": {
     "message": "使用说明"

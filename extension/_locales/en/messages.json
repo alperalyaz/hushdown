@@ -3,10 +3,10 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Silently saves every download with a timestamp-based filename (yyyyMMddHHmmss)."
+    "message": "Silently saves every download as yyyyMMddHHmmss-originalname, keeping the original filename after a timestamp prefix."
   },
   "headerSub": {
-    "message": "Silently saves downloads with a timestamped filename."
+    "message": "Adds a timestamp prefix (yyyyMMddHHmmss) to each download’s original filename."
   },
   "helpBtnTitle": {
     "message": "How to use"

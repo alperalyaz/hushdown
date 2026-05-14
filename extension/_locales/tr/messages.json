@@ -3,10 +3,10 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Her indirilen dosyayı zaman damgalı bir isimle (yyyyAAggSSddss) sessizce kaydeder."
+    "message": "Her indirmeyi yyyyAAggSSddss-orijinalad biçiminde sessizce kaydeder; orijinal dosya adı zaman damgasından sonra gelir."
   },
   "headerSub": {
-    "message": "İndirilen dosyaları zaman damgalı isimle sessizce kaydeder."
+    "message": "Her indirmeye yyyyAAggSSddss zaman damgası öneki ekler; orijinal ad korunur."
   },
   "helpBtnTitle": {
     "message": "Nasıl kullanılır"

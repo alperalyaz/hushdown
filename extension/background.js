@@ -56,6 +56,9 @@ function getExtensionFromDownload(item) {
   let ext = extFromName(item.filename);
   if (ext) return ext;
 
+  ext = extFromName(item.suggestedFilename || "");
+  if (ext) return ext;
+
   try {
     const url = item.finalUrl || item.url || "";
     const pathname = new URL(url).pathname;
@@ -84,10 +87,69 @@ function getExtensionFromDownload(item) {
   return "";
 }
 
-chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
-  const ext = getExtensionFromDownload(downloadItem);
+function getSuggestedBasename(item) {
+  if (item.suggestedFilename) {
+    const leaf = String(item.suggestedFilename).split(/[/\\]/).pop();
+    if (leaf) return leaf;
+  }
+  try {
+    const u = item.finalUrl || item.url || "";
+    if (!u || u.startsWith("blob:") || u.startsWith("data:")) return "";
+    const pathname = new URL(u).pathname;
+    const parts = pathname.split("/").filter(Boolean);
+    const last = parts.pop();
+    if (!last) return "";
+    try {
+      return decodeURIComponent(last);
+    } catch {
+      return last;
+    }
+  } catch {
+    return "";
+  }
+}
+
+function sanitizeWindowsBasename(name) {
+  if (!name || typeof name !== "string") return "";
+  let n = name.split(/[/\\]/).pop().trim();
+  n = n.replace(/[\x00-\x1f<>:"/\\|?*]/g, "_");
+  n = n.replace(/[. ]+$/, "");
+  n = n.replace(/^\.+/, "");
+  if (!n) return "";
+  const stem = n.includes(".") ? n.slice(0, n.lastIndexOf(".")) : n;
+  const stemCheck = stem || n;
+  if (/^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i.test(stemCheck)) {
+    return "file_" + n;
+  }
+  return n;
+}
+
+function nameHasExtensionSegment(name) {
+  return /\.[A-Za-z0-9]{1,12}$/.test(name);
+}
+
+function buildDownloadFilename(downloadItem) {
   const stamp = formatTimestampStamp();
-  const filename = ext ? `${stamp}.${ext}` : stamp;
+  const mimeExt = getExtensionFromDownload(downloadItem);
+  const raw = getSuggestedBasename(downloadItem);
+  let body = sanitizeWindowsBasename(raw);
+  if (!body) body = "download";
+  if (mimeExt && !nameHasExtensionSegment(body)) {
+    body = `${body}.${mimeExt}`;
+  }
+  const prefix = stamp + "-";
+  const maxTotal = 200;
+  let out = prefix + body;
+  if (out.length > maxTotal) {
+    const budget = Math.max(1, maxTotal - prefix.length);
+    body = body.slice(0, budget);
+    out = prefix + body;
+  }
+  return out;
+}
+
+chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
+  const filename = buildDownloadFilename(downloadItem);
 
   suggest({
     filename,
@@ -231,7 +293,8 @@ chrome.downloads.onChanged.addListener((delta) => {
     if (chrome.runtime.lastError || !results || !results.length) return;
     const item = results[0];
     const fullPath = item.filename || "";
-    const name = fullPath.split(/[/\\]/).pop() || "indirilen";
+    const name =
+      fullPath.split(/[/\\]/).pop() || chrome.i18n.getMessage("downloadedFile");
     const timeLabel = new Date().toLocaleString("tr-TR", {
       day: "2-digit",
       month: "2-digit",
