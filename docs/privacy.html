@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HushDown — Privacy Policy</title>
+  <meta name="description" content="Privacy policy for the HushDown Chrome extension." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0e1117;
+      --surface: #161b25;
+      --border: #2a3547;
+      --text: #e8edf5;
+      --muted: #8a96aa;
+      --accent2: #7aa3f5;
+      --radius: 14px;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+    a { color: var(--accent2); }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 64px; }
+    h1 {
+      font-size: clamp(26px, 4vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .meta { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 28px 0 10px;
+    }
+    p, li { color: var(--muted); margin-bottom: 12px; }
+    ul { padding-left: 1.25rem; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+    strong { color: var(--text); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-top: 20px;
+    }
+    .nav { margin-bottom: 24px; font-size: 14px; }
+    footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="nav"><a href="./">← Welcome / setup</a></p>
+    <h1>HushDown — Privacy Policy</h1>
+    <p class="meta">Last updated: 14 May 2026 · Open source: <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">GitHub</a></p>
+
+    <div class="card">
+      <p>
+        <strong>HushDown</strong> is a Chrome extension developed on behalf of <strong>Hidroteknik</strong>.
+        This policy describes how the extension handles information. HushDown does not operate its own backend
+        for collecting or storing your personal data on our servers.
+      </p>
+    </div>
+
+    <h2>1. What the extension does</h2>
+    <p>
+      HushDown suggests a filename when you download a file (timestamp prefix plus the original suggested name),
+      may show a desktop notification when a download completes, and shows a short list of recent downloads
+      in the extension popup. These features use only your browser’s extension APIs and local storage as described below.
+    </p>
+
+    <h2>2. Data stored on your device</h2>
+    <p>All data below stays under your control via Chrome. It is not transmitted to Hidroteknik or third-party analytics servers by the extension.</p>
+    <ul>
+      <li><strong>Chrome <code>storage.sync</code>:</strong> a small list (last 10) of completed download labels (display name and time) for the popup.</li>
+      <li><strong>Chrome <code>storage.local</code>:</strong> small image thumbnail data for recent downloads, used only to show previews in the popup.</li>
+    </ul>
+    <p>Chrome may sync <code>storage.sync</code> data across your signed-in Chrome devices according to Google’s own sync and account policies.</p>
+
+    <h2>3. Permissions (why they exist)</h2>
+    <ul>
+      <li><strong>downloads</strong> — to apply the suggested filename on new downloads and to read basic download metadata after completion (log, notifications, optional file removal when you delete an entry from the list).</li>
+      <li><strong>downloads.open</strong> — only when you choose to open a file from the list or related UI.</li>
+      <li><strong>storage</strong> — to persist the short download log and thumbnails as above.</li>
+      <li><strong>notifications</strong> — to show download-complete notifications.</li>
+      <li><strong>offscreen</strong> — to convert a locally saved image into a format usable for rich notifications (invisible helper page bundled with the extension).</li>
+      <li><strong>file:///*</strong> (optional) — only if you enable “Allow access to file URLs” for HushDown in <code>chrome://extensions</code>, so the extension can read downloaded image files from disk to build previews. No remote browsing of your files.</li>
+    </ul>
+
+    <h2>4. Remote code</h2>
+    <p>
+      The extension’s executable logic is contained in the extension package submitted to the Chrome Web Store.
+      HushDown does not load or execute remote JavaScript for its core functionality.
+      Opening the welcome or documentation site in a normal browser tab is ordinary web browsing, not remote code inside the extension.
+    </p>
+
+    <h2>5. Third parties, sale of data</h2>
+    <p>
+      We do not sell your personal information. We do not use an extension-specific analytics pipeline to send your
+      download history or file contents to Hidroteknik. Google operates the Chrome Web Store and the browser;
+      their terms and privacy policies apply to Chrome itself.
+    </p>
+
+    <h2>6. Children’s privacy</h2>
+    <p>HushDown is not directed at children under 13, and we do not knowingly collect personal information from children for this project.</p>
+
+    <h2>7. Changes</h2>
+    <p>We may update this policy when the extension or legal requirements change. The “Last updated” date at the top will be revised accordingly.</p>
+
+    <h2>8. Contact</h2>
+    <p>
+      Questions about this policy or the extension:
+      <a href="mailto:hushdown@hidroteknik.com.tr">hushdown@hidroteknik.com.tr</a>
+    </p>
+
+    <footer>
+      &copy; 2026 Hidroteknik · Developer: Alper Alyaz
+    </footer>
+  </div>
+</body>
+</html>
