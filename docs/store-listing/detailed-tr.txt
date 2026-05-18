@@ -1,0 +1,86 @@
+HushDown — Chrome indirmelerine otomatik zaman damgalı dosya adı
+
+İndirilenler klasöründe "resim (1).png", "belge (2).pdf" ve anlamsız sunucu adlarından bıktınız mı? HushDown arka planda sessizce çalışır; her yeni indirmeye düzenli, bulunabilir ve arşivlenebilir bir ad verir — tarayıcı kullanımınızı değiştirmeden.
+
+NEDEN HUSHDOWN?
+
+• Varsayılan olarak sıralanabilir — Dosya adları yyyyAAggSSddss (yıl, ay, gün, saat, dakika, saniye) ile başlar; İndirilenler klasörü gerçek kronolojik sırada dizilir.
+
+• İsimlendirme seçeneği — Açılır pencerede üç mod: yalnızca zaman damgası, zaman damgası + orijinal ad veya yalnızca orijinal ad.
+
+• Zengin bildirimler — İndirme bittiğinde haberdar olun; görsel dosyalarda (izin verildiğinde) bildirimde önizleme gösterilebilir.
+
+• Son 10 indirme — Açılır pencerede hızlı liste; görsellerde küçük önizleme, dosya açma veya listeden kaldırma.
+
+• Hesap yok, reklam yok, abonelik yok — Ücretsiz ve açık kaynak.
+
+ÜÇ DOSYA ADI MODU
+
+1. Zaman damgası (varsayılan) — Örnek: 20260514153045.png
+
+2. Zaman damgası + orijinal ad — Örnek: 20260514153045-fatura.pdf
+
+3. Orijinal ad — Sitenin önerdiği ad (Windows için temizlenmiş), zaman damgası eklenmez
+
+Modu istediğiniz zaman araç çubuğundaki eklenti simgesinden değiştirebilirsiniz. Tercih, Chrome’a giriş yaptıysanız cihazlar arasında senkronize olabilir.
+
+NASIL ÇALIŞIR?
+
+HushDown, indirme başlarken yeni bir dosya adı önerir. Dosyalar yine Chrome’un varsayılan indirme klasörüne kaydedilir — konumu chrome://settings/downloads adresinden değiştirebilirsiniz. Yalnızca yeni indirmeler etkilenir; diskteki mevcut dosyalara dokunulmaz.
+
+KİMLER İÇİN?
+
+• Referans görsel indiren tasarımcılar ve fotoğrafçılar
+• Derleme, log ve varlık indiren geliştiriciler
+• PDF, tablo ve dışa aktarım arşivleyen ofis kullanıcıları
+• Düzenli, zamana göre sıralı bir İndirilenler klasörü isteyen herkes
+
+BİLDİRİMLER VE GÖRSEL ÖNİZLEME
+
+İndirme tamamlandığında HushDown masaüstü bildirimi gösterebilir. Görsel önizlemesi için eklenti ayrıntılarında (chrome://extensions) “Dosya URL’lerine erişime izin ver” seçeneğini açın. Önizlemeler yalnızca cihazınızda oluşturulur — dış sunucuya yükleme yapılmaz.
+
+GİZLİLİK
+
+• HushDown sunucusu indirme geçmişinizi toplamaz
+• Kısa son liste (son 10) ve isteğe bağlı küçük resimler Chrome depolamasında kalır
+• Kullanıcı verisi satılmaz
+• Açık kaynak: github.com/alperalyaz/hushdown
+• Gizlilik politikası: alperalyaz.github.io/hushdown/privacy.html
+
+DİLLER
+
+Eklenti arayüzü: Türkçe, İngilizce ve Basitleştirilmiş Çince (Chrome dil ayarınıza göre).
+
+İZİNLER (NEDEN GEREKLİ)
+
+• downloads — Yeni indirmeleri yeniden adlandırma ve tamamlanma bilgisi
+• downloads.open — Listeden tıklayınca dosyayı açma
+• storage — Son indirmeler listesi ve küçük resimler
+• notifications — İndirme tamamlandı bildirimleri
+• offscreen — Bildirim için görsel önizleme (paket içi yardımcı sayfa)
+• file:// (isteğe bağlı, kullanıcı açar) — Önizleme için yerel görsel okuma
+
+HIZLI BAŞLANGIÇ
+
+1. HushDown’ı kurun ve araç çubuğuna sabitleyin (yapboz simgesi → sabitle).
+2. Açılır pencereden dosya adı modunu seçin.
+3. Bir dosya indirin ve İndirilenler klasörünü kontrol edin.
+4. İsteğe bağlı: Chrome bildirimleri ve görsel önizleme için dosya URL erişimini açın.
+
+SSS
+
+İndirme klasörümü değiştirir mi?
+Hayır — yalnızca dosya adı. Klasör yolu Chrome ayarındadır.
+
+Eski dosyalar yeniden adlandırılır mı?
+Hayır — yalnızca kurulumdan sonraki yeni indirmeler.
+
+Bildirimleri kapatabilir miyim?
+Evet — Windows veya Chrome bildirim ayarlarından.
+
+Ücretsiz mi?
+Evet. Hidroteknik’in deneysel projesi; gelir modeli yoktur.
+
+DESTEK
+
+Soru ve öneriler: hushdown@hidroteknik.com.tr

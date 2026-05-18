@@ -1,0 +1,86 @@
+HushDown — Automatic timestamp filenames for every Chrome download
+
+Tired of messy download folders full of "image (1).png", "document (2).pdf", and cryptic server names? HushDown runs quietly in the background and renames every new download so you can sort, find, and archive files instantly — without changing how you browse the web.
+
+WHY HUSHDOWN?
+
+• Sortable by default — Filenames start with yyyyMMddHHmmss (year, month, day, hour, minute, second), so your Downloads folder sorts in true chronological order.
+
+• Your choice of naming — Three modes in the popup: timestamp only, timestamp plus original name, or original name only.
+
+• Rich notifications — Know when a download finishes; image files can show a preview in the notification when enabled.
+
+• Last 10 downloads — Quick list in the popup with thumbnails for images, open files, or remove entries.
+
+• No account, no ads, no subscription — Free and open source.
+
+THREE FILENAME MODES
+
+1. Timestamp (default) — Example: 20260514153045.png
+
+2. Timestamp + original name — Example: 20260514153045-invoice.pdf
+
+3. Original name — Keeps the site’s suggested filename (sanitized), no timestamp added
+
+Change the mode anytime from the extension toolbar popup. Your preference can sync across Chrome when you’re signed in.
+
+HOW IT WORKS
+
+HushDown suggests a new filename when a download starts. Files still save to your normal Chrome download folder — change the location in chrome://settings/downloads anytime. Only new downloads are affected; files already on your disk are never modified.
+
+PERFECT FOR
+
+• Designers and photographers saving reference images
+• Developers downloading builds, logs, and assets
+• Office workers archiving PDFs, spreadsheets, and exports
+• Anyone who wants a clean, time-ordered Downloads folder
+
+NOTIFICATIONS AND IMAGE PREVIEWS
+
+When a download completes, HushDown can show a desktop notification. For image previews, enable “Allow access to file URLs” on the extension details page (chrome://extensions). Previews are generated locally on your device — nothing is uploaded to external servers.
+
+PRIVACY
+
+• No HushDown server collects your download history
+• A short recent list (last 10) and optional thumbnails stay in Chrome storage on your device
+• We do not sell user data
+• Open source: github.com/alperalyaz/hushdown
+• Privacy policy: alperalyaz.github.io/hushdown/privacy.html
+
+LANGUAGES
+
+Extension UI: English, Turkish, and Simplified Chinese (follows your Chrome language).
+
+PERMISSIONS (WHY WE NEED THEM)
+
+• downloads — Rename new downloads and read completion metadata
+• downloads.open — Open a file when you click it in the list
+• storage — Save the short recent-download list and thumbnails
+• notifications — Download-complete alerts
+• offscreen — Build image previews for notifications (bundled helper page)
+• file:// (optional, user-enabled) — Read downloaded images locally for previews
+
+GETTING STARTED
+
+1. Install HushDown and pin it to the toolbar (puzzle icon, then pin).
+2. Choose your filename mode in the popup.
+3. Download any file and check your Downloads folder.
+4. Optional: allow Chrome notifications and file URL access for image previews.
+
+FAQ
+
+Does it change my download folder?
+No — only the filename. The folder path is still Chrome’s setting.
+
+Will old files be renamed?
+No — only new downloads after install.
+
+Can I turn off notifications?
+Yes — in Windows or Chrome notification settings.
+
+Is it free?
+Yes. An experimental project by Hidroteknik with no revenue model.
+
+SUPPORT
+
+Questions or suggestions: hushdown@hidroteknik.com.tr

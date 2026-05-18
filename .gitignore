@@ -8,3 +8,6 @@ Thumbs.db
 
 # Scripts (geliştirici aracı, dağıtımda gerekmez)
 scripts/
+
+# Store upload ZIP (build locally, do not commit)
+*.zip
