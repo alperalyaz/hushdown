@@ -5,17 +5,17 @@
   "extDescription": {
     "message": "静默将下载重命名为 yyyyMMddHHmmss 时间戳（默认）或时间戳加原始文件名—可在弹窗中选择。"
   },
-  "headerSub": {
-    "message": "时间戳文件名；可在设置中保留原始文件名。"
-  },
   "filenameModeLabel": {
     "message": "文件名"
   },
   "filenameModeTimestamp": {
-    "message": "仅时间戳（如 20260514153045.png）"
+    "message": "时间戳"
   },
   "filenameModeTimestampOriginal": {
-    "message": "时间戳 + 原始名称（如 20260514153045-photo.png）"
+    "message": "时间戳 + 原始名称"
+  },
+  "filenameModeOriginal": {
+    "message": "原始名称"
   },
   "helpBtnTitle": {
     "message": "使用说明"

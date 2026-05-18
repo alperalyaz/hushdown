@@ -11,7 +11,7 @@
       <img src="icons/logo.png" alt="HushDown" class="hd-logo" width="36" height="36" />
       <div class="hd-header-text">
         <h1 class="hd-title">HushDown</h1>
-        <p class="hd-sub" data-i18n="headerSub"></p>
+        <p class="hd-sub" id="versionLabel"></p>
       </div>
       <button type="button" id="helpBtn" class="hd-help-btn" data-i18n-title="helpBtnTitle">?</button>
     </header>
@@ -19,14 +19,20 @@
     <section class="hd-section hd-settings-section">
       <fieldset class="hd-settings">
         <legend class="hd-settings-label" data-i18n="filenameModeLabel"></legend>
-        <label class="hd-radio">
-          <input type="radio" name="filenameMode" value="timestamp" checked />
-          <span data-i18n="filenameModeTimestamp"></span>
-        </label>
-        <label class="hd-radio">
-          <input type="radio" name="filenameMode" value="timestamp-original" />
-          <span data-i18n="filenameModeTimestampOriginal"></span>
-        </label>
+        <div class="hd-radio-group">
+          <label class="hd-radio">
+            <input type="radio" name="filenameMode" value="timestamp" checked />
+            <span data-i18n="filenameModeTimestamp"></span>
+          </label>
+          <label class="hd-radio">
+            <input type="radio" name="filenameMode" value="timestamp-original" />
+            <span data-i18n="filenameModeTimestampOriginal"></span>
+          </label>
+          <label class="hd-radio">
+            <input type="radio" name="filenameMode" value="original" />
+            <span data-i18n="filenameModeOriginal"></span>
+          </label>
+        </div>
       </fieldset>
     </section>
 

@@ -9,8 +9,15 @@ function applyI18n() {
   });
 }
 
-const FILENAME_MODE_TIMESTAMP = "timestamp";
-const FILENAME_MODE_ORIGINAL = "timestamp-original";
+const MODE_TIMESTAMP = "timestamp";
+const MODE_TIMESTAMP_ORIGINAL = "timestamp-original";
+const MODE_ORIGINAL = "original";
+
+const VALID_MODES = new Set([
+  MODE_TIMESTAMP,
+  MODE_TIMESTAMP_ORIGINAL,
+  MODE_ORIGINAL,
+]);
 
 const openDownloadsBtn = document.getElementById("openDownloads");
 const logEl = document.getElementById("log");
@@ -18,15 +25,19 @@ const logEmptyEl = document.getElementById("logEmpty");
 const filenameModeRadios = document.querySelectorAll('input[name="filenameMode"]');
 
 function loadFilenameMode() {
-  chrome.storage.sync.get({ filenameMode: FILENAME_MODE_TIMESTAMP }, (data) => {
-    const mode =
-      data.filenameMode === FILENAME_MODE_ORIGINAL
-        ? FILENAME_MODE_ORIGINAL
-        : FILENAME_MODE_TIMESTAMP;
+  chrome.storage.sync.get({ filenameMode: MODE_TIMESTAMP }, (data) => {
+    const mode = VALID_MODES.has(data.filenameMode)
+      ? data.filenameMode
+      : MODE_TIMESTAMP;
     filenameModeRadios.forEach((radio) => {
       radio.checked = radio.value === mode;
     });
   });
+}
+
+function showVersion() {
+  const el = document.getElementById("versionLabel");
+  if (el) el.textContent = "v" + chrome.runtime.getManifest().version;
 }
 
 function initFilenameModeRadios() {
@@ -168,6 +179,7 @@ document.getElementById("helpBtn").addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   applyI18n();
+  showVersion();
   initFilenameModeRadios();
   loadFilenameMode();
   load();

@@ -83,8 +83,8 @@ body {
 }
 
 .hd-settings-section {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .hd-settings {
@@ -95,31 +95,37 @@ body {
 
 .hd-settings-label {
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   padding: 0;
 }
 
-.hd-radio {
+.hd-radio-group {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  font-size: 12px;
-  line-height: 1.4;
-  color: var(--muted);
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: center;
 }
 
-.hd-radio:last-child {
-  margin-bottom: 0;
+.hd-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1.25;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .hd-radio input {
-  margin: 2px 0 0;
+  margin: 0;
   flex-shrink: 0;
   accent-color: var(--accent);
+  width: 13px;
+  height: 13px;
 }
 
 .hd-radio:has(input:checked) {

@@ -5,17 +5,17 @@
   "extDescription": {
     "message": "İndirmeleri sessizce yyyyAAggSSddss zaman damgasıyla (varsayılan) veya zaman damgası + orijinal ad ile yeniden adlandırır—tercih popup’tan seçilir."
   },
-  "headerSub": {
-    "message": "Zaman damgalı dosya adları; ayarlardan orijinal ad eklenebilir."
-  },
   "filenameModeLabel": {
     "message": "Dosya adı"
   },
   "filenameModeTimestamp": {
-    "message": "Yalnızca zaman damgası (ör. 20260514153045.png)"
+    "message": "Zaman damgası"
   },
   "filenameModeTimestampOriginal": {
-    "message": "Zaman damgası + orijinal ad (ör. 20260514153045-foto.png)"
+    "message": "Zaman damgası + Orijinal Ad"
+  },
+  "filenameModeOriginal": {
+    "message": "Orijinal Ad"
   },
   "helpBtnTitle": {
     "message": "Nasıl kullanılır"

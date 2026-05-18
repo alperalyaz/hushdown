@@ -1,24 +1,28 @@
-const FILENAME_MODE_TIMESTAMP = "timestamp";
-const FILENAME_MODE_ORIGINAL = "timestamp-original";
+const MODE_TIMESTAMP = "timestamp";
+const MODE_TIMESTAMP_ORIGINAL = "timestamp-original";
+const MODE_ORIGINAL = "original";
+
+function normalizeFilenameMode(mode) {
+  if (mode === MODE_TIMESTAMP_ORIGINAL) return MODE_TIMESTAMP_ORIGINAL;
+  if (mode === MODE_ORIGINAL) return MODE_ORIGINAL;
+  return MODE_TIMESTAMP;
+}
 
 const DEFAULT_SETTINGS = {
   downloadLog: [],
-  filenameMode: FILENAME_MODE_TIMESTAMP,
+  filenameMode: MODE_TIMESTAMP,
 };
 
 let settingsCache = {
   downloadLog: [],
-  filenameMode: FILENAME_MODE_TIMESTAMP,
+  filenameMode: MODE_TIMESTAMP,
 };
 
 function applyStorageResult(result) {
   settingsCache.downloadLog = Array.isArray(result.downloadLog)
     ? result.downloadLog
     : [];
-  settingsCache.filenameMode =
-    result.filenameMode === FILENAME_MODE_ORIGINAL
-      ? FILENAME_MODE_ORIGINAL
-      : FILENAME_MODE_TIMESTAMP;
+  settingsCache.filenameMode = normalizeFilenameMode(result.filenameMode);
 }
 
 chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
@@ -40,10 +44,9 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
       : [];
   }
   if (changes.filenameMode) {
-    settingsCache.filenameMode =
-      changes.filenameMode.newValue === FILENAME_MODE_ORIGINAL
-        ? FILENAME_MODE_ORIGINAL
-        : FILENAME_MODE_TIMESTAMP;
+    settingsCache.filenameMode = normalizeFilenameMode(
+      changes.filenameMode.newValue,
+    );
   }
 });
 
@@ -151,8 +154,7 @@ function buildTimestampOnlyFilename(downloadItem) {
   return ext ? `${stamp}.${ext}` : stamp;
 }
 
-function buildTimestampOriginalFilename(downloadItem) {
-  const stamp = formatTimestampStamp();
+function buildSuggestedBody(downloadItem) {
   const mimeExt = getExtensionFromDownload(downloadItem);
   const raw = getSuggestedBasename(downloadItem);
   let body = sanitizeWindowsBasename(raw);
@@ -160,7 +162,13 @@ function buildTimestampOriginalFilename(downloadItem) {
   if (mimeExt && !nameHasExtensionSegment(body)) {
     body = `${body}.${mimeExt}`;
   }
+  return body;
+}
+
+function buildTimestampOriginalFilename(downloadItem) {
+  const stamp = formatTimestampStamp();
   const prefix = stamp + "-";
+  let body = buildSuggestedBody(downloadItem);
   const maxTotal = 200;
   let out = prefix + body;
   if (out.length > maxTotal) {
@@ -171,9 +179,19 @@ function buildTimestampOriginalFilename(downloadItem) {
   return out;
 }
 
+function buildOriginalOnlyFilename(downloadItem) {
+  let body = buildSuggestedBody(downloadItem);
+  if (body.length > 200) body = body.slice(0, 200);
+  return body;
+}
+
 function buildDownloadFilename(downloadItem) {
-  if (settingsCache.filenameMode === FILENAME_MODE_ORIGINAL) {
+  const mode = settingsCache.filenameMode;
+  if (mode === MODE_TIMESTAMP_ORIGINAL) {
     return buildTimestampOriginalFilename(downloadItem);
+  }
+  if (mode === MODE_ORIGINAL) {
+    return buildOriginalOnlyFilename(downloadItem);
   }
   return buildTimestampOnlyFilename(downloadItem);
 }
