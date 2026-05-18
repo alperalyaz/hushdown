@@ -1,13 +1,24 @@
-const DEFAULT_SETTINGS = { downloadLog: [] };
+const FILENAME_MODE_TIMESTAMP = "timestamp";
+const FILENAME_MODE_ORIGINAL = "timestamp-original";
+
+const DEFAULT_SETTINGS = {
+  downloadLog: [],
+  filenameMode: FILENAME_MODE_TIMESTAMP,
+};
 
 let settingsCache = {
   downloadLog: [],
+  filenameMode: FILENAME_MODE_TIMESTAMP,
 };
 
 function applyStorageResult(result) {
   settingsCache.downloadLog = Array.isArray(result.downloadLog)
     ? result.downloadLog
     : [];
+  settingsCache.filenameMode =
+    result.filenameMode === FILENAME_MODE_ORIGINAL
+      ? FILENAME_MODE_ORIGINAL
+      : FILENAME_MODE_TIMESTAMP;
 }
 
 chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
@@ -27,6 +38,12 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     settingsCache.downloadLog = Array.isArray(changes.downloadLog.newValue)
       ? changes.downloadLog.newValue
       : [];
+  }
+  if (changes.filenameMode) {
+    settingsCache.filenameMode =
+      changes.filenameMode.newValue === FILENAME_MODE_ORIGINAL
+        ? FILENAME_MODE_ORIGINAL
+        : FILENAME_MODE_TIMESTAMP;
   }
 });
 
@@ -128,7 +145,13 @@ function nameHasExtensionSegment(name) {
   return /\.[A-Za-z0-9]{1,12}$/.test(name);
 }
 
-function buildDownloadFilename(downloadItem) {
+function buildTimestampOnlyFilename(downloadItem) {
+  const stamp = formatTimestampStamp();
+  const ext = getExtensionFromDownload(downloadItem);
+  return ext ? `${stamp}.${ext}` : stamp;
+}
+
+function buildTimestampOriginalFilename(downloadItem) {
   const stamp = formatTimestampStamp();
   const mimeExt = getExtensionFromDownload(downloadItem);
   const raw = getSuggestedBasename(downloadItem);
@@ -146,6 +169,13 @@ function buildDownloadFilename(downloadItem) {
     out = prefix + body;
   }
   return out;
+}
+
+function buildDownloadFilename(downloadItem) {
+  if (settingsCache.filenameMode === FILENAME_MODE_ORIGINAL) {
+    return buildTimestampOriginalFilename(downloadItem);
+  }
+  return buildTimestampOnlyFilename(downloadItem);
 }
 
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {

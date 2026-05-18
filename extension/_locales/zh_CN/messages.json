@@ -3,10 +3,19 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "静默将每个下载保存为 yyyyMMddHHmmss-原始文件名，在时间戳前缀后保留原始名称。"
+    "message": "静默将下载重命名为 yyyyMMddHHmmss 时间戳（默认）或时间戳加原始文件名—可在弹窗中选择。"
   },
   "headerSub": {
-    "message": "为每次下载添加 yyyyMMddHHmmss 时间戳前缀，并保留原始文件名。"
+    "message": "时间戳文件名；可在设置中保留原始文件名。"
+  },
+  "filenameModeLabel": {
+    "message": "文件名"
+  },
+  "filenameModeTimestamp": {
+    "message": "仅时间戳（如 20260514153045.png）"
+  },
+  "filenameModeTimestampOriginal": {
+    "message": "时间戳 + 原始名称（如 20260514153045-photo.png）"
   },
   "helpBtnTitle": {
     "message": "使用说明"

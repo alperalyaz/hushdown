@@ -3,10 +3,19 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Silently saves every download as yyyyMMddHHmmss-originalname, keeping the original filename after a timestamp prefix."
+    "message": "Silently renames downloads with a yyyyMMddHHmmss timestamp (default) or timestamp plus original filename—your choice in the popup."
   },
   "headerSub": {
-    "message": "Adds a timestamp prefix (yyyyMMddHHmmss) to each download’s original filename."
+    "message": "Timestamped download names; optional original filename in settings."
+  },
+  "filenameModeLabel": {
+    "message": "Filename"
+  },
+  "filenameModeTimestamp": {
+    "message": "Timestamp only (e.g. 20260514153045.png)"
+  },
+  "filenameModeTimestampOriginal": {
+    "message": "Timestamp + original name (e.g. 20260514153045-photo.png)"
   },
   "helpBtnTitle": {
     "message": "How to use"

@@ -3,10 +3,19 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Her indirmeyi yyyyAAggSSddss-orijinalad biçiminde sessizce kaydeder; orijinal dosya adı zaman damgasından sonra gelir."
+    "message": "İndirmeleri sessizce yyyyAAggSSddss zaman damgasıyla (varsayılan) veya zaman damgası + orijinal ad ile yeniden adlandırır—tercih popup’tan seçilir."
   },
   "headerSub": {
-    "message": "Her indirmeye yyyyAAggSSddss zaman damgası öneki ekler; orijinal ad korunur."
+    "message": "Zaman damgalı dosya adları; ayarlardan orijinal ad eklenebilir."
+  },
+  "filenameModeLabel": {
+    "message": "Dosya adı"
+  },
+  "filenameModeTimestamp": {
+    "message": "Yalnızca zaman damgası (ör. 20260514153045.png)"
+  },
+  "filenameModeTimestampOriginal": {
+    "message": "Zaman damgası + orijinal ad (ör. 20260514153045-foto.png)"
   },
   "helpBtnTitle": {
     "message": "Nasıl kullanılır"

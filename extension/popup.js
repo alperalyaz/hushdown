@@ -9,9 +9,34 @@ function applyI18n() {
   });
 }
 
+const FILENAME_MODE_TIMESTAMP = "timestamp";
+const FILENAME_MODE_ORIGINAL = "timestamp-original";
+
 const openDownloadsBtn = document.getElementById("openDownloads");
 const logEl = document.getElementById("log");
 const logEmptyEl = document.getElementById("logEmpty");
+const filenameModeRadios = document.querySelectorAll('input[name="filenameMode"]');
+
+function loadFilenameMode() {
+  chrome.storage.sync.get({ filenameMode: FILENAME_MODE_TIMESTAMP }, (data) => {
+    const mode =
+      data.filenameMode === FILENAME_MODE_ORIGINAL
+        ? FILENAME_MODE_ORIGINAL
+        : FILENAME_MODE_TIMESTAMP;
+    filenameModeRadios.forEach((radio) => {
+      radio.checked = radio.value === mode;
+    });
+  });
+}
+
+function initFilenameModeRadios() {
+  filenameModeRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (!radio.checked) return;
+      chrome.storage.sync.set({ filenameMode: radio.value });
+    });
+  });
+}
 
 function removeLogEntry(rowIndex) {
   chrome.storage.sync.get({ downloadLog: [] }, (data) => {
@@ -143,5 +168,7 @@ document.getElementById("helpBtn").addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   applyI18n();
+  initFilenameModeRadios();
+  loadFilenameMode();
   load();
 });
