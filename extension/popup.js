@@ -7,6 +7,9 @@ function applyI18n() {
   document.querySelectorAll("[data-i18n-title]").forEach((el) => {
     el.title = i18n(el.dataset.i18nTitle);
   });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    el.placeholder = i18n(el.dataset.i18nPlaceholder);
+  });
 }
 
 const MODE_TIMESTAMP = "timestamp";
@@ -22,8 +25,12 @@ const VALID_MODES = new Set([
 const openDownloadsBtn = document.getElementById("openDownloads");
 const logEl = document.getElementById("log");
 const logEmptyEl = document.getElementById("logEmpty");
+const searchInput = document.getElementById("searchInput");
 const filenameModeRadios = document.querySelectorAll('input[name="filenameMode"]');
 const folderOrganizationCheckbox = document.getElementById("folderOrganization");
+
+let allEntries = [];
+let allThumbMap = {};
 
 function loadFilenameMode() {
   chrome.storage.sync.get({ filenameMode: MODE_TIMESTAMP }, (data) => {
@@ -62,14 +69,18 @@ function initFolderOrganizationToggle() {
   });
 }
 
-function removeLogEntry(rowIndex) {
-  chrome.storage.sync.get({ downloadLog: [] }, (data) => {
+function removeLogEntry(downloadId, entryTime) {
+  chrome.storage.local.get({ downloadLog: [] }, (data) => {
     const entries = data.downloadLog || [];
-    const removed = entries[rowIndex];
-    const next = entries.filter((_, i) => i !== rowIndex);
+    const idx = entries.findIndex((e) =>
+      downloadId ? Number(e.id) === downloadId : e.time === entryTime
+    );
+    if (idx === -1) { load(); return; }
+    const removed = entries[idx];
+    const next = entries.filter((_, i) => i !== idx);
 
     function cleanup() {
-      chrome.storage.sync.set({ downloadLog: next }, () => {
+      chrome.storage.local.set({ downloadLog: next }, () => {
         if (removed && removed.id) {
           chrome.storage.local.remove("thumb_" + removed.id);
         }
@@ -95,7 +106,7 @@ function renderLog(entries, thumbMap) {
     return;
   }
   logEmptyEl.hidden = true;
-  entries.forEach((row, rowIndex) => {
+  entries.forEach((row) => {
     const li = document.createElement("li");
     li.className = "hd-log-row";
 
@@ -132,7 +143,7 @@ function renderLog(entries, thumbMap) {
     del.title = i18n("removeFromList");
     del.addEventListener("click", (e) => {
       e.stopPropagation();
-      removeLogEntry(rowIndex);
+      removeLogEntry(hasId ? id : null, row.time);
     });
     li.appendChild(del);
 
@@ -145,20 +156,31 @@ function renderLog(entries, thumbMap) {
   });
 }
 
+function applySearch() {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) return renderLog(allEntries, allThumbMap);
+  const filtered = allEntries.filter((e) =>
+    (e.name || "").toLowerCase().includes(q)
+  );
+  renderLog(filtered, allThumbMap);
+}
+
 function load() {
-  chrome.storage.sync.get({ downloadLog: [] }, (data) => {
-    const entries = data.downloadLog || [];
-    const thumbKeys = entries
+  chrome.storage.local.get({ downloadLog: [] }, (data) => {
+    allEntries = data.downloadLog || [];
+    const thumbKeys = allEntries
       .map((e) => Number(e.id))
       .filter((id) => Number.isFinite(id) && id > 0)
       .map((id) => "thumb_" + id);
 
     if (thumbKeys.length) {
       chrome.storage.local.get(thumbKeys, (thumbMap) => {
-        renderLog(entries, thumbMap || {});
+        allThumbMap = thumbMap || {};
+        applySearch();
       });
     } else {
-      renderLog(entries, {});
+      allThumbMap = {};
+      applySearch();
     }
   });
 }
@@ -189,6 +211,8 @@ document.getElementById("fullHistory").addEventListener("click", (e) => {
 document.getElementById("helpBtn").addEventListener("click", () => {
   chrome.tabs.create({ url: "https://alperalyaz.github.io/hushdown/" });
 });
+
+searchInput.addEventListener("input", applySearch);
 
 document.addEventListener("DOMContentLoaded", () => {
   applyI18n();

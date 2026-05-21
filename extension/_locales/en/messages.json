@@ -23,6 +23,12 @@
   "last10Heading": {
     "message": "Last 10 downloads"
   },
+  "historyHeading": {
+    "message": "Downloads"
+  },
+  "searchPlaceholder": {
+    "message": "Search downloads…"
+  },
   "openFolderTitle": {
     "message": "Open downloads folder"
   },

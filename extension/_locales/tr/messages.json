@@ -23,6 +23,12 @@
   "last10Heading": {
     "message": "Son 10 indirme"
   },
+  "historyHeading": {
+    "message": "İndirmeler"
+  },
+  "searchPlaceholder": {
+    "message": "İndirmelerde ara…"
+  },
   "openFolderTitle": {
     "message": "İndirilenler klasörünü aç"
   },

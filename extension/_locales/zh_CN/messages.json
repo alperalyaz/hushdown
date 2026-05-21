@@ -23,6 +23,12 @@
   "last10Heading": {
     "message": "最近 10 次下载"
   },
+  "historyHeading": {
+    "message": "下载记录"
+  },
+  "searchPlaceholder": {
+    "message": "搜索下载记录…"
+  },
   "openFolderTitle": {
     "message": "打开下载文件夹"
   },

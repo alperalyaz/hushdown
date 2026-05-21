@@ -9,21 +9,16 @@ function normalizeFilenameMode(mode) {
 }
 
 const DEFAULT_SETTINGS = {
-  downloadLog: [],
   filenameMode: MODE_TIMESTAMP,
   folderOrganization: false,
 };
 
 let settingsCache = {
-  downloadLog: [],
   filenameMode: MODE_TIMESTAMP,
   folderOrganization: false,
 };
 
 function applyStorageResult(result) {
-  settingsCache.downloadLog = Array.isArray(result.downloadLog)
-    ? result.downloadLog
-    : [];
   settingsCache.filenameMode = normalizeFilenameMode(result.filenameMode);
   settingsCache.folderOrganization = result.folderOrganization === true;
 }
@@ -41,11 +36,6 @@ chrome.runtime.onInstalled.addListener((details) => {
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName !== "sync") return;
-  if (changes.downloadLog) {
-    settingsCache.downloadLog = Array.isArray(changes.downloadLog.newValue)
-      ? changes.downloadLog.newValue
-      : [];
-  }
   if (changes.filenameMode) {
     settingsCache.filenameMode = normalizeFilenameMode(
       changes.filenameMode.newValue,
@@ -232,16 +222,18 @@ chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
   });
 });
 
+const LOG_MAX = 200;
+
 function pushDownloadLog(entry) {
-  const prev = settingsCache.downloadLog || [];
-  const next = [entry, ...prev].slice(0, 10);
-  const removedIds = prev.slice(9).map((e) => e.id).filter(Boolean);
-  settingsCache.downloadLog = next;
-  chrome.storage.sync.set({ downloadLog: next });
-  if (removedIds.length) {
-    const keysToRemove = removedIds.map((id) => "thumb_" + id);
-    chrome.storage.local.remove(keysToRemove);
-  }
+  chrome.storage.local.get({ downloadLog: [] }, (data) => {
+    const prev = Array.isArray(data.downloadLog) ? data.downloadLog : [];
+    const next = [entry, ...prev].slice(0, LOG_MAX);
+    const removedIds = prev.slice(LOG_MAX - 1).map((e) => e.id).filter(Boolean);
+    chrome.storage.local.set({ downloadLog: next });
+    if (removedIds.length) {
+      chrome.storage.local.remove(removedIds.map((id) => "thumb_" + id));
+    }
+  });
 }
 
 function saveThumb(downloadId, thumbUrl) {
