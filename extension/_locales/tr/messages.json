@@ -9,10 +9,10 @@
     "message": "Dosya adı"
   },
   "filenameModeTimestamp": {
-    "message": "Damga"
+    "message": "Tarih"
   },
   "filenameModeTimestampOriginal": {
-    "message": "Damga + Ad"
+    "message": "Tarih + Ad"
   },
   "filenameModeOriginal": {
     "message": "Orijinal"
