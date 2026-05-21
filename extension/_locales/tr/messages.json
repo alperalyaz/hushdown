@@ -46,5 +46,8 @@
   },
   "notifDownloaded": {
     "message": "İndirildi"
+  },
+  "folderOrganizationLabel": {
+    "message": "Türe göre alt klasöre kaydet (görseller, belgeler, videolar…)"
   }
 }

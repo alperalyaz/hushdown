@@ -11,11 +11,13 @@ function normalizeFilenameMode(mode) {
 const DEFAULT_SETTINGS = {
   downloadLog: [],
   filenameMode: MODE_TIMESTAMP,
+  folderOrganization: false,
 };
 
 let settingsCache = {
   downloadLog: [],
   filenameMode: MODE_TIMESTAMP,
+  folderOrganization: false,
 };
 
 function applyStorageResult(result) {
@@ -23,6 +25,7 @@ function applyStorageResult(result) {
     ? result.downloadLog
     : [];
   settingsCache.filenameMode = normalizeFilenameMode(result.filenameMode);
+  settingsCache.folderOrganization = result.folderOrganization === true;
 }
 
 chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
@@ -47,6 +50,9 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     settingsCache.filenameMode = normalizeFilenameMode(
       changes.filenameMode.newValue,
     );
+  }
+  if (changes.folderOrganization) {
+    settingsCache.folderOrganization = changes.folderOrganization.newValue === true;
   }
 });
 
@@ -185,6 +191,21 @@ function buildOriginalOnlyFilename(downloadItem) {
   return body;
 }
 
+const EXT_TO_FOLDER = (() => {
+  const map = {
+    images:   ["jpg","jpeg","png","gif","webp","svg","bmp","ico","tiff","avif","heic"],
+    docs:     ["pdf","doc","docx","xls","xlsx","ppt","pptx","odt","ods","odp","txt","rtf","csv","md"],
+    videos:   ["mp4","mkv","avi","mov","wmv","flv","webm","m4v","3gp"],
+    audio:    ["mp3","flac","wav","ogg","aac","m4a","wma","opus"],
+    archives: ["zip","rar","7z","tar","gz","bz2","xz","tgz"],
+  };
+  const result = {};
+  for (const [folder, exts] of Object.entries(map)) {
+    for (const ext of exts) result[ext] = folder;
+  }
+  return result;
+})();
+
 function buildDownloadFilename(downloadItem) {
   const mode = settingsCache.filenameMode;
   if (mode === MODE_TIMESTAMP_ORIGINAL) {
@@ -197,7 +218,13 @@ function buildDownloadFilename(downloadItem) {
 }
 
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
-  const filename = buildDownloadFilename(downloadItem);
+  let filename = buildDownloadFilename(downloadItem);
+
+  if (settingsCache.folderOrganization) {
+    const ext = getExtensionFromDownload(downloadItem);
+    const folder = EXT_TO_FOLDER[ext] || "";
+    if (folder) filename = folder + "/" + filename;
+  }
 
   suggest({
     filename,

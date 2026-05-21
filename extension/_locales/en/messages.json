@@ -46,5 +46,8 @@
   },
   "notifDownloaded": {
     "message": "Downloaded"
+  },
+  "folderOrganizationLabel": {
+    "message": "Sort into subfolders by type (images, docs, videos…)"
   }
 }

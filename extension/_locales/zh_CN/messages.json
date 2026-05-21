@@ -46,5 +46,8 @@
   },
   "notifDownloaded": {
     "message": "已下载"
+  },
+  "folderOrganizationLabel": {
+    "message": "按类型保存到子文件夹（图片、文档、视频…）"
   }
 }

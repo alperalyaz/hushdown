@@ -132,6 +132,38 @@ body {
   color: var(--text);
 }
 
+.hd-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+
+.hd-toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.hd-toggle-row input[type="checkbox"] {
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+}
+
+.hd-toggle-label {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.25;
+}
+
+.hd-toggle-row:has(input:checked) .hd-toggle-label {
+  color: var(--text);
+}
+
 .hd-section:last-of-type {
   border-bottom: none;
 }

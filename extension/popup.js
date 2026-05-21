@@ -23,6 +23,7 @@ const openDownloadsBtn = document.getElementById("openDownloads");
 const logEl = document.getElementById("log");
 const logEmptyEl = document.getElementById("logEmpty");
 const filenameModeRadios = document.querySelectorAll('input[name="filenameMode"]');
+const folderOrganizationCheckbox = document.getElementById("folderOrganization");
 
 function loadFilenameMode() {
   chrome.storage.sync.get({ filenameMode: MODE_TIMESTAMP }, (data) => {
@@ -46,6 +47,18 @@ function initFilenameModeRadios() {
       if (!radio.checked) return;
       chrome.storage.sync.set({ filenameMode: radio.value });
     });
+  });
+}
+
+function loadFolderOrganization() {
+  chrome.storage.sync.get({ folderOrganization: false }, (data) => {
+    folderOrganizationCheckbox.checked = data.folderOrganization === true;
+  });
+}
+
+function initFolderOrganizationToggle() {
+  folderOrganizationCheckbox.addEventListener("change", () => {
+    chrome.storage.sync.set({ folderOrganization: folderOrganizationCheckbox.checked });
   });
 }
 
@@ -182,5 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showVersion();
   initFilenameModeRadios();
   loadFilenameMode();
+  initFolderOrganizationToggle();
+  loadFolderOrganization();
   load();
 });
