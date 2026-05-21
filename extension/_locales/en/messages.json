@@ -12,10 +12,10 @@
     "message": "Timestamp"
   },
   "filenameModeTimestampOriginal": {
-    "message": "Timestamp + original name"
+    "message": "Stamp+Name"
   },
   "filenameModeOriginal": {
-    "message": "Original name"
+    "message": "Original"
   },
   "helpBtnTitle": {
     "message": "How to use"

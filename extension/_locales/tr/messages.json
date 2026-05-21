@@ -9,13 +9,13 @@
     "message": "Dosya adı"
   },
   "filenameModeTimestamp": {
-    "message": "Zaman damgası"
+    "message": "Damga"
   },
   "filenameModeTimestampOriginal": {
-    "message": "Zaman damgası + Orijinal Ad"
+    "message": "Damga + Ad"
   },
   "filenameModeOriginal": {
-    "message": "Orijinal Ad"
+    "message": "Orijinal"
   },
   "helpBtnTitle": {
     "message": "Nasıl kullanılır"

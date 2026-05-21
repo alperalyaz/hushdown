@@ -121,15 +121,19 @@ body {
   padding: 0;
 }
 
-/* ── PILL RADIO BUTTONS ── */
+/* ── SEGMENT CONTROL ── */
 
 .hd-pill-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
+  gap: 3px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
 }
 
 .hd-pill {
+  flex: 1;
   cursor: pointer;
 }
 
@@ -142,31 +146,30 @@ body {
 }
 
 .hd-pill span {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding: 4px 11px;
-  border-radius: 20px;
+  justify-content: center;
+  padding: 5px 4px;
+  border-radius: 7px;
   font-size: 11px;
   font-weight: 500;
   color: var(--muted);
-  border: 1px solid var(--border);
-  background: transparent;
   white-space: nowrap;
-  transition: color 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s, background 0.15s, box-shadow 0.15s;
   user-select: none;
 }
 
 .hd-pill:has(input:checked) span {
   color: var(--accent-hover);
-  border-color: var(--accent);
   background: var(--accent-dim);
   box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .hd-pill:not(:has(input:checked)):hover span {
   color: var(--text);
-  border-color: var(--border-2);
-  background: var(--surface);
+  background: var(--surface-2);
 }
 
 /* ── DIVIDER ── */

@@ -12,10 +12,10 @@
     "message": "时间戳"
   },
   "filenameModeTimestampOriginal": {
-    "message": "时间戳 + 原始名称"
+    "message": "戳+名称"
   },
   "filenameModeOriginal": {
-    "message": "原始名称"
+    "message": "原始名"
   },
   "helpBtnTitle": {
     "message": "使用说明"
