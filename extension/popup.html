@@ -19,16 +19,16 @@
     <section class="hd-section hd-settings-section">
       <fieldset class="hd-settings">
         <legend class="hd-settings-label" data-i18n="filenameModeLabel"></legend>
-        <div class="hd-radio-group">
-          <label class="hd-radio">
+        <div class="hd-pill-group">
+          <label class="hd-pill">
             <input type="radio" name="filenameMode" value="timestamp" checked />
             <span data-i18n="filenameModeTimestamp"></span>
           </label>
-          <label class="hd-radio">
+          <label class="hd-pill">
             <input type="radio" name="filenameMode" value="timestamp-original" />
             <span data-i18n="filenameModeTimestampOriginal"></span>
           </label>
-          <label class="hd-radio">
+          <label class="hd-pill">
             <input type="radio" name="filenameMode" value="original" />
             <span data-i18n="filenameModeOriginal"></span>
           </label>
@@ -37,6 +37,7 @@
       <div class="hd-divider"></div>
       <label class="hd-toggle-row">
         <input type="checkbox" id="folderOrganization" />
+        <span class="hd-switch"></span>
         <span class="hd-toggle-label" data-i18n="folderOrganizationLabel"></span>
       </label>
     </section>
@@ -47,8 +48,13 @@
         <button type="button" id="openDownloads" class="hd-btn hd-btn-sm"
           data-i18n="openFolderLabel" data-i18n-title="openFolderTitle"></button>
       </div>
-      <input type="search" id="searchInput" class="hd-search"
-        data-i18n-placeholder="searchPlaceholder" />
+      <div class="hd-search-wrap">
+        <svg class="hd-search-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="searchInput" class="hd-search"
+          data-i18n-placeholder="searchPlaceholder" />
+      </div>
       <ul id="log" class="hd-log"></ul>
       <p id="logEmpty" class="hd-empty" data-i18n="logEmptyText"></p>
       <a href="#" id="fullHistory" class="hd-full-history" data-i18n="fullHistoryLabel"></a>
