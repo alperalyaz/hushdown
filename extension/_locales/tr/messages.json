@@ -3,7 +3,7 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "İndirmeleri sessizce yyyyAAggSSddss zaman damgasıyla (varsayılan) veya zaman damgası + orijinal ad ile yeniden adlandırır—tercih popup’tan seçilir."
+    "message": "Her indirmeyi otomatik olarak yyAAgg-SSddss zaman damgasıyla yeniden adlandırır. Üç mod, klasör organizasyonu ve aranabilir geçmiş—popup’tan yönetin."
   },
   "filenameModeLabel": {
     "message": "Dosya adı"

@@ -3,7 +3,7 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Silently renames downloads with a yyMMdd-HHmmss timestamp (default) or timestamp plus original filename—your choice in the popup."
+    "message": "Auto-renames every download with a yyMMdd-HHmmss timestamp. Three modes, folder organization, and searchable history—managed from the popup."
   },
   "filenameModeLabel": {
     "message": "Filename"
