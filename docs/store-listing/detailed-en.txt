@@ -4,7 +4,7 @@ Tired of messy download folders full of "image (1).png", "document (2).pdf", and
 
 WHY HUSHDOWN?
 
-• Sortable by default — Filenames start with yyyyMMddHHmmss (year, month, day, hour, minute, second), so your Downloads folder sorts in true chronological order.
+• Sortable by default — Filenames start with yyMMdd-HHmmss (year, month, day, hour, minute, second), so your Downloads folder sorts in true chronological order.
 
 • Your choice of naming — Three modes in the popup: timestamp only, timestamp plus original name, or original name only.
 

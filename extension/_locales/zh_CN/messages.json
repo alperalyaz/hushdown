@@ -3,7 +3,7 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "静默将下载重命名为 yyyyMMddHHmmss 时间戳（默认）或时间戳加原始文件名—可在弹窗中选择。"
+    "message": "静默将下载重命名为 yyMMdd-HHmmss 时间戳（默认）或时间戳加原始文件名—可在弹窗中选择。"
   },
   "filenameModeLabel": {
     "message": "文件名"
