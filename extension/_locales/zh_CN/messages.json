@@ -3,46 +3,76 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "自动将每个下载重命名为 yyMMdd-HHmmss 时间戳。三种模式、文件夹整理和可搜索历史记录—在弹窗中管理。"
-  },
-  "filenameModeLabel": {
-    "message": "文件名"
-  },
-  "filenameModeTimestamp": {
-    "message": "时间戳"
-  },
-  "filenameModeTimestampOriginal": {
-    "message": "戳+名称"
-  },
-  "filenameModeOriginal": {
-    "message": "原始名"
+    "message": "按项目整理下载文件，统一命名，并自动记录来源清单。专为作业和项目设计。"
   },
   "helpBtnTitle": {
     "message": "使用说明"
   },
-  "last10Heading": {
-    "message": "最近 10 次下载"
+  "projectHeading": {
+    "message": "当前正在进行的项目"
+  },
+  "projectPlaceholder": {
+    "message": "例如：生物作业"
+  },
+  "projectStart": {
+    "message": "开始"
+  },
+  "idleHint": {
+    "message": "开始一个项目后，所有下载都会按编号存入该项目的文件夹，并自动记录来源。未选择项目时，只会修正 \"image931.png\" 这类无意义的文件名。"
+  },
+  "projectStop": {
+    "message": "结束"
+  },
+  "showFolder": {
+    "message": "打开文件夹"
+  },
+  "copySources": {
+    "message": "复制来源"
+  },
+  "copied": {
+    "message": "来源已复制到剪贴板"
+  },
+  "copyFailed": {
+    "message": "复制失败"
+  },
+  "groupActive": {
+    "message": "此标签页属于“$1”分组，从这里下载的文件会存入“$1”文件夹。"
+  },
+  "projectCount": {
+    "message": "$1 个文件 · 来源清单位于文件夹中：$2"
+  },
+  "projectEmpty": {
+    "message": "还没有文件。下一个下载会存到这里。"
+  },
+  "nextFile": {
+    "message": "下一个："
+  },
+  "useTabGroupsLabel": {
+    "message": "将标签页分组名称用作项目"
+  },
+  "notificationsLabel": {
+    "message": "下载完成时显示通知"
   },
   "historyHeading": {
     "message": "下载记录"
   },
   "searchPlaceholder": {
-    "message": "搜索下载记录…"
+    "message": "搜索文件或项目…"
   },
   "openFolderTitle": {
     "message": "打开下载文件夹"
   },
   "openFolderLabel": {
-    "message": "打开文件夹"
+    "message": "下载文件夹"
   },
   "logEmptyText": {
-    "message": "暂无下载记录。"
+    "message": "暂无记录。"
   },
   "fullHistoryLabel": {
-    "message": "完整下载历史"
+    "message": "完整下载记录"
   },
   "removeFromList": {
-    "message": "从列表中移除"
+    "message": "从列表移除（文件保留）"
   },
   "clickToOpen": {
     "message": "点击打开文件"
@@ -53,7 +83,34 @@
   "notifDownloaded": {
     "message": "已下载"
   },
-  "folderOrganizationLabel": {
-    "message": "按类型保存到子文件夹（图片、文档、视频…）"
+  "sourcesTitle": {
+    "message": "来源"
+  },
+  "sourcesNote": {
+    "message": "HushDown 会在每次下载时自动更新此清单。"
+  },
+  "sourcesPage": {
+    "message": "页面"
+  },
+  "sourcesFileUrl": {
+    "message": "文件地址"
+  },
+  "sourcesUnknown": {
+    "message": "来源地址未知"
+  },
+  "sourcesAccessed": {
+    "message": "访问时间"
+  },
+  "sourcesFileName": {
+    "message": "_来源.txt"
+  },
+  "permHint": {
+    "message": "要在来源清单中记录网页的完整地址和标题吗？Chrome 会显示为“读取您的浏览记录”；HushDown 只查看你下载时所在的标签页，不会发送任何数据。"
+  },
+  "permGrant": {
+    "message": "允许"
+  },
+  "sourcesTitleLabel": {
+    "message": "标题"
   }
 }

@@ -1,11 +1,23 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "permissions": ["downloads", "downloads.open", "storage", "notifications", "offscreen"],
-  "host_permissions": ["file:///*"],
+  "permissions": [
+    "downloads",
+    "downloads.open",
+    "storage",
+    "notifications",
+    "offscreen",
+    "tabGroups"
+  ],
+  "optional_permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "file:///*"
+  ],
   "background": {
     "service_worker": "background.js"
   },

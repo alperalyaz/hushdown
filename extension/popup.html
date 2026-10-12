@@ -16,29 +16,50 @@
       <button type="button" id="helpBtn" class="hd-help-btn" data-i18n-title="helpBtnTitle">?</button>
     </header>
 
-    <section class="hd-section hd-settings-section">
-      <fieldset class="hd-settings">
-        <legend class="hd-settings-label" data-i18n="filenameModeLabel"></legend>
-        <div class="hd-pill-group">
-          <label class="hd-pill">
-            <input type="radio" name="filenameMode" value="timestamp" checked />
-            <span data-i18n="filenameModeTimestamp"></span>
-          </label>
-          <label class="hd-pill">
-            <input type="radio" name="filenameMode" value="timestamp-original" />
-            <span data-i18n="filenameModeTimestampOriginal"></span>
-          </label>
-          <label class="hd-pill">
-            <input type="radio" name="filenameMode" value="original" />
-            <span data-i18n="filenameModeOriginal"></span>
-          </label>
+    <section class="hd-section">
+      <h2 class="hd-heading" data-i18n="projectHeading"></h2>
+
+      <div id="groupCard" class="hd-card hd-card-group" hidden>
+        <p class="hd-card-text" id="groupText"></p>
+      </div>
+
+      <form id="startForm" class="hd-start">
+        <input type="text" id="projectInput" class="hd-input" maxlength="60"
+          autocomplete="off" data-i18n-placeholder="projectPlaceholder" />
+        <button type="submit" class="hd-btn hd-btn-primary" data-i18n="projectStart"></button>
+      </form>
+      <div id="recentList" class="hd-chips"></div>
+      <p id="idleHint" class="hd-hint" data-i18n="idleHint"></p>
+
+      <div id="activeCard" class="hd-card" hidden>
+        <div class="hd-card-top">
+          <span class="hd-dot"></span>
+          <span class="hd-card-title" id="activeName"></span>
         </div>
-      </fieldset>
-      <div class="hd-divider"></div>
+        <p class="hd-card-meta" id="activeMeta"></p>
+        <p class="hd-card-example" id="activeExample"></p>
+        <div id="permRow" class="hd-perm" hidden>
+          <p class="hd-perm-text" data-i18n="permHint"></p>
+          <button type="button" id="grantTabs" class="hd-btn hd-btn-sm hd-btn-primary" data-i18n="permGrant"></button>
+        </div>
+        <div class="hd-card-actions">
+          <button type="button" id="showFolder" class="hd-btn hd-btn-sm" data-i18n="showFolder"></button>
+          <button type="button" id="copySources" class="hd-btn hd-btn-sm" data-i18n="copySources"></button>
+          <button type="button" id="stopProject" class="hd-btn hd-btn-sm hd-btn-ghost" data-i18n="projectStop"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="hd-section hd-settings-section">
       <label class="hd-toggle-row">
-        <input type="checkbox" id="folderOrganization" />
+        <input type="checkbox" id="useTabGroups" />
         <span class="hd-switch"></span>
-        <span class="hd-toggle-label" data-i18n="folderOrganizationLabel"></span>
+        <span class="hd-toggle-label" data-i18n="useTabGroupsLabel"></span>
+      </label>
+      <label class="hd-toggle-row">
+        <input type="checkbox" id="notifications" />
+        <span class="hd-switch"></span>
+        <span class="hd-toggle-label" data-i18n="notificationsLabel"></span>
       </label>
     </section>
 
@@ -60,6 +81,10 @@
       <a href="#" id="fullHistory" class="hd-full-history" data-i18n="fullHistoryLabel"></a>
     </section>
 
+    <div id="toast" class="hd-toast" hidden></div>
+
+    <script src="naming.js"></script>
+    <script src="sources.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

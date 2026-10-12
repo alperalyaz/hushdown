@@ -63,7 +63,7 @@
   <div class="wrap">
     <p class="nav"><a href="./">← Welcome / setup</a></p>
     <h1>HushDown — Privacy Policy</h1>
-    <p class="meta">Last updated: 14 May 2026 · Open source: <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">GitHub</a></p>
+    <p class="meta">Last updated: 12 October 2026 · Open source: <a href="https://github.com/alperalyaz/hushdown" target="_blank" rel="noopener">GitHub</a></p>
 
     <div class="card">
       <p>
@@ -75,28 +75,33 @@
 
     <h2>1. What the extension does</h2>
     <p>
-      HushDown suggests a filename when you download a file (timestamp prefix plus the original suggested name),
-      may show a desktop notification when a download completes, and shows a short list of recent downloads
-      in the extension popup. These features use only your browser’s extension APIs and local storage as described below.
+      HushDown suggests a folder and filename when you download a file. If you started a project in the popup, or the
+      tab is in a named Chrome tab group, the file is saved in a folder for that project with a numbered name, and a
+      sources list is kept for the folder. Otherwise it keeps the normal filename and only renames meaningless ones.
+      The popup shows a searchable list of recent downloads, and an optional notification (off by default) can appear
+      when a download completes. These features use only your browser’s extension APIs, local storage and your Downloads folder, as described below.
     </p>
 
     <h2>2. Data stored on your device</h2>
-    <p>All data below stays under your control via Chrome. It is not transmitted to Hidroteknik or third-party analytics servers by the extension.</p>
+    <p>All data below stays under your control via Chrome and your own disk. It is not transmitted to Hidroteknik or third-party analytics servers by the extension. HushDown has no servers and no accounts.</p>
     <ul>
-      <li><strong>Chrome <code>storage.sync</code>:</strong> a small list (last 10) of completed download labels (display name and time) for the popup.</li>
-      <li><strong>Chrome <code>storage.local</code>:</strong> small image thumbnail data for recent downloads, used only to show previews in the popup.</li>
+      <li><strong>Chrome <code>storage.sync</code>:</strong> your settings, the active project name and a short list of recent project names.</li>
+      <li><strong>Chrome <code>storage.local</code>:</strong> the download history shown in the popup (up to 200 entries: file name, time and project), small image thumbnails for those entries, per-project file counters, and the sources list for each project.</li>
+      <li><strong>Sources list:</strong> for each file saved into a project folder, its number and file name, the address of the page it came from, the file’s download address and the access date. The same list is written as a text file (for example <code>_sources.txt</code>) into that project’s folder in your Downloads folder.</li>
     </ul>
-    <p>Chrome may sync <code>storage.sync</code> data across your signed-in Chrome devices according to Google’s own sync and account policies.</p>
+    <p>Chrome may sync <code>storage.sync</code> data across your signed-in Chrome devices according to Google’s own sync and account policies. Removing an entry from the popup list removes it from the history only; it does not delete the file.</p>
 
     <h2>3. Permissions (why they exist)</h2>
     <ul>
-      <li><strong>downloads</strong> — to apply the suggested filename on new downloads and to read basic download metadata after completion (log, notifications, optional file removal when you delete an entry from the list).</li>
+      <li><strong>downloads</strong> — to apply the suggested folder and filename on new downloads, to read basic download metadata after completion (history, sources list, optional notifications), and to write the sources text file and keep it out of Chrome’s download list.</li>
       <li><strong>downloads.open</strong> — only when you choose to open a file from the list or related UI.</li>
-      <li><strong>storage</strong> — to persist the short download log and thumbnails as above.</li>
-      <li><strong>notifications</strong> — to show download-complete notifications.</li>
-      <li><strong>offscreen</strong> — to convert a locally saved image into a format usable for rich notifications (invisible helper page bundled with the extension).</li>
-      <li><strong>file:///*</strong> (optional) — only if you enable “Allow access to file URLs” for HushDown in <code>chrome://extensions</code>, so the extension can read downloaded image files from disk to build previews. No remote browsing of your files.</li>
+      <li><strong>storage</strong> — to persist settings, history, thumbnails and the sources list as above.</li>
+      <li><strong>notifications</strong> — to show an optional download-complete notification (off by default).</li>
+      <li><strong>offscreen</strong> — to make image thumbnails from a locally saved image (invisible helper page bundled with the extension).</li>
+      <li><strong>tabGroups</strong> — to read the name of the active tab’s group, so a named group can be used as the project folder.</li>
+      <li><strong>file:///*</strong> (optional) — only if you enable “Allow access to file URLs” for HushDown in <code>chrome://extensions</code>, so the extension can read downloaded image files from disk to build thumbnails. No remote browsing of your files.</li>
     </ul>
+    <p>The <code>tabs</code> permission is optional. HushDown asks for it once, when you start your first project. If you allow it, HushDown reads the address and title of the tab a file is downloaded from, at that moment only, and writes them to the sources list on your computer. Chrome describes this permission as “Read your browsing history”; HushDown does not read your history and sends nothing anywhere. If you do not allow it, the page address comes from the download itself (its referrer), which browsers often shorten to the site root.</p>
 
     <h2>4. Remote code</h2>
     <p>

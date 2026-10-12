@@ -1,82 +1,87 @@
-HushDown — Automatic timestamp filenames for every Chrome download
+HushDown — Organise downloads by the work you're doing
 
-Tired of messy download folders full of "image (1).png", "document (2).pdf", and cryptic server names? HushDown runs quietly in the background and renames every new download so you can sort, find, and archive files instantly — without changing how you browse the web.
+Writing an assignment and collecting images, PDFs and notes from a dozen sites? They usually end up in Downloads as "image931.png", "download (3).pdf" and "IMG_20240101_1234.jpg", and later you can't remember where any of them came from. HushDown sorts downloads by the work you're doing, not by file type: tell it what you're working on, and every file goes into that project's folder with a clear, numbered name and an automatic sources list.
 
 WHY HUSHDOWN?
 
-• Sortable by default — Filenames start with yyMMdd-HHmmss (year, month, day, hour, minute, second), so your Downloads folder sorts in true chronological order.
+• One folder per project — Type a project name in the popup, for example "Biology Essay", and press Start. Every download goes to Downloads/Biology Essay/ until you press Finish. Recent projects appear as chips for one-click restart.
 
-• Your choice of naming — Three modes in the popup: timestamp only, timestamp plus original name, or original name only.
+• Standard, numbered names — Files are named <project>_<number>_<name>, for example biology-essay_001_mitochondrion.png and biology-essay_002_week4-notes.pdf. The number keeps the order you collected things in.
 
-• Rich notifications — Know when a download finishes; image files can show a preview in the notification when enabled.
+• Meaningful names — A useful file name from the site is kept but tidied ("Week4 Notes.pdf" becomes week4-notes.pdf). Junk names such as image931.png, download (3), IMG_20240101_1234, hashes or "WhatsApp Image ..." are replaced with the topic of the page: a file from en.wikipedia.org/wiki/Mitochondrion becomes "mitochondrion".
 
-• Last 10 downloads — Quick list in the popup with thumbnails for images, open files, or remove entries.
+• Automatic sources list — Each project folder gets _sources.txt with every file's number, the page it came from, the file URL and the access date. Copy it to the clipboard with one click.
+
+• Tab groups as projects — Downloads from a tab in a named Chrome tab group go to a folder named after the group, with no popup needed.
 
 • No account, no ads, no subscription — Free and open source.
 
-THREE FILENAME MODES
-
-1. Timestamp (default) — Example: 20260514153045.png
-
-2. Timestamp + original name — Example: 20260514153045-invoice.pdf
-
-3. Original name — Keeps the site’s suggested filename (sanitized), no timestamp added
-
-Change the mode anytime from the extension toolbar popup. Your preference can sync across Chrome when you’re signed in.
-
 HOW IT WORKS
 
-HushDown suggests a new filename when a download starts. Files still save to your normal Chrome download folder — change the location in chrome://settings/downloads anytime. Only new downloads are affected; files already on your disk are never modified.
+When a download starts, HushDown decides which folder and name it gets:
+
+1. If the active tab is in a named tab group, the group name is the project. (A named group takes priority over the popup project. You can switch this off in the popup: "Use tab group names as projects".)
+2. Otherwise, if you started a project in the popup, that project is used.
+3. With no project and no named group, HushDown stays out of the way: normal file names are kept, and only junk names are renamed, as <topic>_<yyMMdd-HHmmss>, for example mitochondrion_261012-140305.png.
+
+Project folders are created inside your normal Chrome download folder — change the location in chrome://settings/downloads anytime. The sources list is rewritten after each download and is kept out of Chrome's download list. Only new downloads are affected; files already on your disk are never modified.
+
+The popup also shows your last 200 downloads with thumbnails for images, each tagged with its project. Search by file or project name, click to open a file, or use × to remove a row from the list (the file is not deleted). A desktop notification when a download finishes is optional and off by default.
 
 PERFECT FOR
 
-• Designers and photographers saving reference images
-• Developers downloading builds, logs, and assets
-• Office workers archiving PDFs, spreadsheets, and exports
-• Anyone who wants a clean, time-ordered Downloads folder
-
-NOTIFICATIONS AND IMAGE PREVIEWS
-
-When a download completes, HushDown can show a desktop notification. For image previews, enable “Allow access to file URLs” on the extension details page (chrome://extensions). Previews are generated locally on your device — nothing is uploaded to external servers.
+• University and school students collecting images, PDFs and notes for an assignment
+• Anyone who needs to cite where each file came from
+• Freelancers and office workers gathering files for a project or client
+• Anyone who wants each piece of work in its own tidy folder
 
 PRIVACY
 
-• No HushDown server collects your download history
-• A short recent list (last 10) and optional thumbnails stay in Chrome storage on your device
+• No servers, no accounts, nothing uploaded — everything stays in your browser and your Downloads folder
+• Settings, history, thumbnails and the sources list (page and file addresses) are stored in Chrome storage on your device; the sources list is also written as a text file into the project folder
 • We do not sell user data
 • Open source: github.com/alperalyaz/hushdown
 • Privacy policy: alperalyaz.github.io/hushdown/privacy.html
 
 LANGUAGES
 
-Extension UI: English, Turkish, and Simplified Chinese (follows your Chrome language).
+Extension UI: English, Turkish, and Simplified Chinese (follows your Chrome language). The sources file is named _sources.txt, _kaynaklar.txt or _来源.txt accordingly.
 
 PERMISSIONS (WHY WE NEED THEM)
 
-• downloads — Rename new downloads and read completion metadata
+• downloads — Rename new downloads and know when they finish
 • downloads.open — Open a file when you click it in the list
-• storage — Save the short recent-download list and thumbnails
-• notifications — Download-complete alerts
-• offscreen — Build image previews for notifications (bundled helper page)
-• file:// (optional, user-enabled) — Read downloaded images locally for previews
+• storage — Save settings, history, the sources list and thumbnails (locally / Chrome sync)
+• notifications — Optional download-complete notice
+• offscreen — Make image thumbnails inside the extension
+• tabGroups — Read the name of the active tab's group
+• file:// (optional, user-enabled) — Read downloaded images locally for thumbnails
+
+tabs (optional) — asked once when you start your first project. Lets the sources list show the full address and title of the tab you download from. Chrome words it as "Read your browsing history"; HushDown only looks at that tab at download time and sends nothing anywhere. Without it, the page address comes from the download itself and is often shortened to the site root.
 
 GETTING STARTED
 
 1. Install HushDown and pin it to the toolbar (puzzle icon, then pin).
-2. Choose your filename mode in the popup.
-3. Download any file and check your Downloads folder.
-4. Optional: allow Chrome notifications and file URL access for image previews.
+2. Open the popup, type what you're working on and press Start.
+3. Download files as usual, then check Downloads/<Project name>/ and its _sources.txt.
+4. Optional: enable "Allow access to file URLs" (chrome://extensions → HushDown → Details) for image thumbnails, and turn on notifications in the popup.
 
 FAQ
 
 Does it change my download folder?
-No — only the filename. The folder path is still Chrome’s setting.
+No — project folders are created inside Chrome's download folder. The location is still Chrome's setting.
+
+What happens when no project is active?
+Normal file names are kept; only junk names are renamed to <topic>_<date-time>.
 
 Will old files be renamed?
-No — only new downloads after install.
+No — only new downloads after install. Removing a row from the history list does not delete the file.
 
-Can I turn off notifications?
-Yes — in Windows or Chrome notification settings.
+Where are the timestamp modes and file-type folders?
+Version 2.0 removed them. Downloads are organised by project instead.
+
+Can I turn notifications on or off?
+Yes — in the popup. They are off by default.
 
 Is it free?
 Yes. An experimental project by Hidroteknik with no revenue model.

@@ -3,37 +3,67 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Her indirmeyi yyAAgg-SSddss damgasıyla otomatik adlandırır. Üç mod, klasör organizasyonu, aranabilir geçmiş—popup’tan yönetin."
-  },
-  "filenameModeLabel": {
-    "message": "Dosya adı"
-  },
-  "filenameModeTimestamp": {
-    "message": "Tarih"
-  },
-  "filenameModeTimestampOriginal": {
-    "message": "Tarih + Ad"
-  },
-  "filenameModeOriginal": {
-    "message": "Orijinal"
+    "message": "İndirdiklerini işe göre klasörler, standart adlar verir ve kaynak listesini otomatik tutar. Ödev ve projeler için."
   },
   "helpBtnTitle": {
     "message": "Nasıl kullanılır"
   },
-  "last10Heading": {
-    "message": "Son 10 indirme"
+  "projectHeading": {
+    "message": "Şu an üzerinde çalıştığım iş"
+  },
+  "projectPlaceholder": {
+    "message": "örn. Biyoloji Ödevi"
+  },
+  "projectStart": {
+    "message": "Başla"
+  },
+  "idleHint": {
+    "message": "Bir iş başlatınca indirdiğin her şey o işin klasörüne sıra numarasıyla kaydedilir ve kaynakları otomatik listelenir. İş seçili değilken sadece \"image931.png\" gibi anlamsız adlar düzeltilir."
+  },
+  "projectStop": {
+    "message": "Bitir"
+  },
+  "showFolder": {
+    "message": "Klasörü aç"
+  },
+  "copySources": {
+    "message": "Kaynakçayı kopyala"
+  },
+  "copied": {
+    "message": "Kaynakça panoya kopyalandı"
+  },
+  "copyFailed": {
+    "message": "Kopyalanamadı"
+  },
+  "groupActive": {
+    "message": "Bu sekme \"$1\" grubunda. Buradan indirilenler \"$1\" klasörüne gider."
+  },
+  "projectCount": {
+    "message": "$1 dosya · kaynak listesi klasörde: $2"
+  },
+  "projectEmpty": {
+    "message": "Henüz dosya yok. İndirdiğin ilk dosya buraya gelecek."
+  },
+  "nextFile": {
+    "message": "Sıradaki:"
+  },
+  "useTabGroupsLabel": {
+    "message": "Sekme grubunun adını iş olarak kullan"
+  },
+  "notificationsLabel": {
+    "message": "İndirme bitince bildirim göster"
   },
   "historyHeading": {
     "message": "İndirmeler"
   },
   "searchPlaceholder": {
-    "message": "İndirmelerde ara…"
+    "message": "Dosya veya iş adıyla ara…"
   },
   "openFolderTitle": {
     "message": "İndirilenler klasörünü aç"
   },
   "openFolderLabel": {
-    "message": "Klasörü aç"
+    "message": "İndirilenler"
   },
   "logEmptyText": {
     "message": "Henüz kayıt yok."
@@ -42,7 +72,7 @@
     "message": "Tam indirme geçmişi"
   },
   "removeFromList": {
-    "message": "Listeden kaldır"
+    "message": "Listeden kaldır (dosya silinmez)"
   },
   "clickToOpen": {
     "message": "Tıklayınca dosya açılır"
@@ -53,7 +83,34 @@
   "notifDownloaded": {
     "message": "İndirildi"
   },
-  "folderOrganizationLabel": {
-    "message": "Türe göre alt klasöre kaydet (görseller, belgeler, videolar…)"
+  "sourcesTitle": {
+    "message": "Kaynaklar"
+  },
+  "sourcesNote": {
+    "message": "HushDown bu listeyi her indirmede otomatik günceller."
+  },
+  "sourcesPage": {
+    "message": "Sayfa"
+  },
+  "sourcesFileUrl": {
+    "message": "Dosya adresi"
+  },
+  "sourcesUnknown": {
+    "message": "Kaynak adresi bilinmiyor"
+  },
+  "sourcesAccessed": {
+    "message": "Erişim"
+  },
+  "sourcesFileName": {
+    "message": "_kaynaklar.txt"
+  },
+  "permHint": {
+    "message": "Kaynak listesine sayfanın tam adresi ve başlığı yazılsın mı? Chrome bunu \"tarama geçmişini okuma\" diye sorar; HushDown sadece indirdiğin sekmeye bakar, hiçbir yere göndermez."
+  },
+  "permGrant": {
+    "message": "İzin ver"
+  },
+  "sourcesTitleLabel": {
+    "message": "Başlık"
   }
 }

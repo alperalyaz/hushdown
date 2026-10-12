@@ -1,85 +1,90 @@
-HushDown — Chrome indirmelerine otomatik zaman damgalı dosya adı
+HushDown — İndirdiklerinizi dosya türüne göre değil, yaptığınız işe göre düzenler
 
-İndirilenler klasöründe "resim (1).png", "belge (2).pdf" ve anlamsız sunucu adlarından bıktınız mı? HushDown arka planda sessizce çalışır; her yeni indirmeye düzenli, bulunabilir ve arşivlenebilir bir ad verir — tarayıcı kullanımınızı değiştirmeden.
+Bir ödev için onlarca siteden görsel, PDF ve not mu topluyorsunuz? Bunlar genelde İndirilenler klasörüne "image931.png", "download (3).pdf" ve "IMG_20240101_1234.jpg" gibi adlarla düşer; sonra hangisinin nereden geldiğini hatırlayamazsınız. HushDown indirdiklerinizi dosya türüne göre değil, yaptığınız işe göre düzenler: ne üzerinde çalıştığınızı söyleyin, her dosya o işin klasörüne numaralı, anlaşılır bir adla kaydedilsin ve kaynak listesi kendiliğinden tutulsun.
 
 NEDEN HUSHDOWN?
 
-• Varsayılan olarak sıralanabilir — Dosya adları yyyyAAggSSddss (yıl, ay, gün, saat, dakika, saniye) ile başlar; İndirilenler klasörü gerçek kronolojik sırada dizilir.
+• Her iş için tek klasör — Açılır pencereye bir iş adı yazın, örneğin "Biyoloji Ödevi", ve Başla'ya basın. Bitir'e basana kadar her indirme İndirilenler/Biyoloji Ödevi/ klasörüne gider. Son işler tek tıkla yeniden başlatmak için düğme olarak görünür.
 
-• İsimlendirme seçeneği — Açılır pencerede üç mod: yalnızca zaman damgası, zaman damgası + orijinal ad veya yalnızca orijinal ad.
+• Standart, numaralı adlar — Dosyalar <iş>_<numara>_<ad> biçiminde adlandırılır, örneğin biyoloji-odevi_001_mitokondri.png ve biyoloji-odevi_002_hafta4-notlari.pdf. Numara, dosyaları topladığınız sırayı korur.
 
-• Zengin bildirimler — İndirme bittiğinde haberdar olun; görsel dosyalarda (izin verildiğinde) bildirimde önizleme gösterilebilir.
+• Anlamlı adlar — Sitedeki dosya adı anlamlıysa korunur ama düzeltilir ("Hafta4 Notlari.pdf" → hafta4-notlari.pdf). image931.png, download (3), IMG_20240101_1234, karma/UUID dizileri, "unnamed" veya "WhatsApp Image ..." gibi anlamsız adların yerine sayfa adresindeki konu yazılır: tr.wikipedia.org/wiki/Mitokondri adresinden indirilen dosya "mitokondri" olur.
 
-• Son 10 indirme — Açılır pencerede hızlı liste; görsellerde küçük önizleme, dosya açma veya listeden kaldırma.
+• Otomatik kaynak listesi — Her iş klasöründe _kaynaklar.txt dosyası bulunur; her dosyanın numarası, geldiği sayfa, dosya adresi ve erişim tarihi burada yazar. Listeyi tek tıkla panoya kopyalayabilirsiniz.
+
+• Sekme grupları iş olarak — Adı olan bir Chrome sekme grubundaki sekmeden indirilen dosyalar, grubun adını taşıyan klasöre gider; açılır pencereyi açmanız gerekmez.
 
 • Hesap yok, reklam yok, abonelik yok — Ücretsiz ve açık kaynak.
 
-ÜÇ DOSYA ADI MODU
-
-1. Zaman damgası (varsayılan) — Örnek: 20260514153045.png
-
-2. Zaman damgası + orijinal ad — Örnek: 20260514153045-fatura.pdf
-
-3. Orijinal ad — Sitenin önerdiği ad (Windows için temizlenmiş), zaman damgası eklenmez
-
-Modu istediğiniz zaman araç çubuğundaki eklenti simgesinden değiştirebilirsiniz. Tercih, Chrome’a giriş yaptıysanız cihazlar arasında senkronize olabilir.
-
 NASIL ÇALIŞIR?
 
-HushDown, indirme başlarken yeni bir dosya adı önerir. Dosyalar yine Chrome’un varsayılan indirme klasörüne kaydedilir — konumu chrome://settings/downloads adresinden değiştirebilirsiniz. Yalnızca yeni indirmeler etkilenir; diskteki mevcut dosyalara dokunulmaz.
+İndirme başlarken HushDown dosyanın hangi klasöre ve hangi adla kaydedileceğine karar verir:
+
+1. Etkin sekme adı olan bir sekme grubundaysa iş olarak grubun adı kullanılır. (Adı olan grup, açılır penceredeki işin önüne geçer. Bunu açılır pencereden kapatabilirsiniz: "Sekme grubunun adını iş olarak kullan".)
+2. Değilse ve açılır pencerede bir iş başlattıysanız o iş kullanılır.
+3. Ne iş ne de adı olan bir grup varsa HushDown araya girmez: normal dosya adları korunur, yalnızca anlamsız adlar <konu>_<yyAAgg-SSddss> biçiminde yeniden adlandırılır, örneğin mitokondri_261012-140305.png.
+
+İş klasörleri Chrome'un normal indirme klasörünün içinde oluşturulur — konumu chrome://settings/downloads adresinden değiştirebilirsiniz. Kaynak listesi her indirmeden sonra yeniden yazılır ve Chrome'un indirme listesinde görünmez. Yalnızca yeni indirmeler etkilenir; diskteki mevcut dosyalara dokunulmaz.
+
+Açılır pencere ayrıca son 200 indirmeyi, görsellerde küçük resimle ve her birinin işiyle birlikte gösterir. Dosya ya da iş adına göre arayabilir, tıklayıp dosyayı açabilir veya × ile satırı listeden kaldırabilirsiniz (dosya silinmez). İndirme bitince masaüstü bildirimi isteğe bağlıdır ve varsayılan olarak kapalıdır.
 
 KİMLER İÇİN?
 
-• Referans görsel indiren tasarımcılar ve fotoğrafçılar
-• Derleme, log ve varlık indiren geliştiriciler
-• PDF, tablo ve dışa aktarım arşivleyen ofis kullanıcıları
-• Düzenli, zamana göre sıralı bir İndirilenler klasörü isteyen herkes
-
-BİLDİRİMLER VE GÖRSEL ÖNİZLEME
-
-İndirme tamamlandığında HushDown masaüstü bildirimi gösterebilir. Görsel önizlemesi için eklenti ayrıntılarında (chrome://extensions) “Dosya URL’lerine erişime izin ver” seçeneğini açın. Önizlemeler yalnızca cihazınızda oluşturulur — dış sunucuya yükleme yapılmaz.
+• Ödev için görsel, PDF ve not toplayan üniversite ve okul öğrencileri
+• Her dosyanın nereden geldiğini kaynak olarak göstermesi gereken herkes
+• Bir proje veya müşteri için dosya toplayan serbest çalışanlar ve ofis kullanıcıları
+• Her işin kendi düzenli klasöründe olmasını isteyen herkes
 
 GİZLİLİK
 
-• HushDown sunucusu indirme geçmişinizi toplamaz
-• Kısa son liste (son 10) ve isteğe bağlı küçük resimler Chrome depolamasında kalır
+• Sunucu yok, hesap yok, hiçbir şey yüklenmez — her şey tarayıcınızda ve İndirilenler klasörünüzde kalır
+• Ayarlar, geçmiş, küçük resimler ve kaynak listesi (sayfa ve dosya adresleri) cihazınızdaki Chrome depolamasında tutulur; kaynak listesi ayrıca iş klasörüne metin dosyası olarak yazılır
 • Kullanıcı verisi satılmaz
 • Açık kaynak: github.com/alperalyaz/hushdown
 • Gizlilik politikası: alperalyaz.github.io/hushdown/privacy.html
 
 DİLLER
 
-Eklenti arayüzü: Türkçe, İngilizce ve Basitleştirilmiş Çince (Chrome dil ayarınıza göre).
+Eklenti arayüzü: Türkçe, İngilizce ve Basitleştirilmiş Çince (Chrome dil ayarınıza göre). Kaynak dosyasının adı da buna göre _kaynaklar.txt, _sources.txt veya _来源.txt olur.
 
 İZİNLER (NEDEN GEREKLİ)
 
-• downloads — Yeni indirmeleri yeniden adlandırma ve tamamlanma bilgisi
+• downloads — Yeni indirmeleri yeniden adlandırma ve bittiklerini öğrenme
 • downloads.open — Listeden tıklayınca dosyayı açma
-• storage — Son indirmeler listesi ve küçük resimler
-• notifications — İndirme tamamlandı bildirimleri
-• offscreen — Bildirim için görsel önizleme (paket içi yardımcı sayfa)
-• file:// (isteğe bağlı, kullanıcı açar) — Önizleme için yerel görsel okuma
+• storage — Ayarlar, geçmiş, kaynak listesi ve küçük resimler (yerel / Chrome senkronizasyonu)
+• notifications — İsteğe bağlı indirme tamamlandı bildirimi
+• offscreen — Görsellerin küçük resmini eklentinin içinde oluşturma
+• tabGroups — Etkin sekmenin grubunun adını okuma
+• file:// (isteğe bağlı, kullanıcı açar) — Küçük resim için indirilen görseli yerelden okuma
+
+tabs (isteğe bağlı) — İlk işi başlatırken bir kez sorulur. Kaynak listesine indirdiğin sekmenin tam adresini ve başlığını yazmak için kullanılır. Chrome bunu "Tarama geçmişinizi okuma" diye gösterir; HushDown sadece indirme anında o sekmeye bakar, hiçbir yere bir şey göndermez. İzin verilmezse sayfa adresi indirmenin kendisinden alınır ve çoğu zaman sadece site adına kısalır.
 
 HIZLI BAŞLANGIÇ
 
-1. HushDown’ı kurun ve araç çubuğuna sabitleyin (yapboz simgesi → sabitle).
-2. Açılır pencereden dosya adı modunu seçin.
-3. Bir dosya indirin ve İndirilenler klasörünü kontrol edin.
-4. İsteğe bağlı: Chrome bildirimleri ve görsel önizleme için dosya URL erişimini açın.
+1. HushDown'ı kurun ve araç çubuğuna sabitleyin (yapboz simgesi → sabitle).
+2. Açılır pencereyi açın, üzerinde çalıştığınız işi yazın ve Başla'ya basın.
+3. Dosyaları her zamanki gibi indirin; ardından İndirilenler/<İş adı>/ klasörüne ve içindeki _kaynaklar.txt dosyasına bakın.
+4. İsteğe bağlı: görsel küçük resimleri için "Dosya URL'lerine erişime izin ver" seçeneğini açın (chrome://extensions → HushDown → Ayrıntılar) ve bildirimleri açılır pencereden açın.
 
 SSS
 
 İndirme klasörümü değiştirir mi?
-Hayır — yalnızca dosya adı. Klasör yolu Chrome ayarındadır.
+Hayır — iş klasörleri Chrome'un indirme klasörünün içinde oluşturulur. Konum yine Chrome ayarındadır.
+
+Hiçbir iş başlatılmamışsa ne olur?
+Normal dosya adları korunur; yalnızca anlamsız adlar <konu>_<tarih-saat> biçiminde yeniden adlandırılır.
 
 Eski dosyalar yeniden adlandırılır mı?
-Hayır — yalnızca kurulumdan sonraki yeni indirmeler.
+Hayır — yalnızca kurulumdan sonraki yeni indirmeler. Geçmiş listesinden bir satırı kaldırmak dosyayı silmez.
 
-Bildirimleri kapatabilir miyim?
-Evet — Windows veya Chrome bildirim ayarlarından.
+Zaman damgası modları ve dosya türü klasörleri nereye gitti?
+2.0 sürümünde kaldırıldı. İndirmeler artık işe göre düzenleniyor.
+
+Bildirimleri açıp kapatabilir miyim?
+Evet — açılır pencereden. Varsayılan olarak kapalıdır.
 
 Ücretsiz mi?
-Evet. Hidroteknik’in deneysel projesi; gelir modeli yoktur.
+Evet. Hidroteknik'in deneysel projesi; gelir modeli yoktur.
 
 DESTEK
 

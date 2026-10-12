@@ -1,121 +1,122 @@
-const MODE_TIMESTAMP = "timestamp";
-const MODE_TIMESTAMP_ORIGINAL = "timestamp-original";
-const MODE_ORIGINAL = "original";
-
-function normalizeFilenameMode(mode) {
-  if (mode === MODE_TIMESTAMP_ORIGINAL) return MODE_TIMESTAMP_ORIGINAL;
-  if (mode === MODE_ORIGINAL) return MODE_ORIGINAL;
-  return MODE_TIMESTAMP;
-}
+importScripts("naming.js", "sources.js");
 
 const DEFAULT_SETTINGS = {
-  filenameMode: MODE_TIMESTAMP,
-  folderOrganization: false,
+  activeProject: "",
+  recentProjects: [],
+  useTabGroups: true,
+  notifications: false,
 };
 
-let settingsCache = {
-  filenameMode: MODE_TIMESTAMP,
-  folderOrganization: false,
-};
+const SOURCES_MAX = 500;
+const LOG_MAX = 200;
 
-function applyStorageResult(result) {
-  settingsCache.filenameMode = normalizeFilenameMode(result.filenameMode);
-  settingsCache.folderOrganization = result.folderOrganization === true;
+function getSettings() {
+  return chrome.storage.sync.get(DEFAULT_SETTINGS);
 }
 
-chrome.storage.sync.get(DEFAULT_SETTINGS, (result) => {
-  applyStorageResult(result);
-});
-
 chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === "install") {
+  // 2.0 replaced the timestamp modes with projects; show 1.x users what changed.
+  const fromV1 = details.reason === "update" && /^1\./.test(details.previousVersion || "");
+  if (details.reason === "install" || fromV1) {
     chrome.tabs.create({ url: "https://alperalyaz.github.io/hushdown/" });
   }
   chrome.runtime.setUninstallURL("https://docs.google.com/forms/d/e/1FAIpQLScXM4JdMBO0hhssBI7sNwtXIVdveTn1_I_Qp1AwuIW-n229Ow/viewform");
 });
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
-  if (areaName !== "sync") return;
-  if (changes.filenameMode) {
-    settingsCache.filenameMode = normalizeFilenameMode(
-      changes.filenameMode.newValue,
-    );
-  }
-  if (changes.folderOrganization) {
-    settingsCache.folderOrganization = changes.folderOrganization.newValue === true;
-  }
-});
+// ── Which project does this download belong to? ──
 
-function pad2(n) {
-  return String(n).padStart(2, "0");
-}
-
-function formatTimestampStamp(date = new Date()) {
-  return (
-    String(date.getFullYear()).slice(-2) +
-    pad2(date.getMonth() + 1) +
-    pad2(date.getDate()) +
-    "-" +
-    pad2(date.getHours()) +
-    pad2(date.getMinutes()) +
-    pad2(date.getSeconds())
-  );
-}
-
-function getExtensionFromDownload(item) {
-  const extFromName = (name) => {
-    if (!name) return "";
-    const base = name.split(/[/\\]/).pop() || "";
-    const m = base.match(/\.([A-Za-z0-9]{1,8})$/);
-    return m ? m[1].toLowerCase() : "";
-  };
-
-  let ext = extFromName(item.filename);
-  if (ext) return ext;
-
-  ext = extFromName(item.suggestedFilename || "");
-  if (ext) return ext;
-
+// A named tab group wins over the project chosen in the popup: the student
+// who groups tabs as "Biyoloji" never has to touch the popup at all.
+async function tabGroupProject() {
   try {
-    const url = item.finalUrl || item.url || "";
-    const pathname = new URL(url).pathname;
-    ext = extFromName(pathname);
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (!tab || tab.groupId === undefined || tab.groupId < 0) return "";
+    const group = await chrome.tabGroups.get(tab.groupId);
+    return (group && group.title ? group.title : "").trim();
+  } catch {
+    return "";
+  }
+}
+
+async function resolveProject(settings) {
+  if (settings.useTabGroups) {
+    const fromGroup = await tabGroupProject();
+    if (projectFolderName(fromGroup)) return fromGroup;
+  }
+  return projectFolderName(settings.activeProject) ? settings.activeProject : "";
+}
+
+// ── Which page did the download come from? ──
+
+function originOf(url) {
+  try {
+    return new URL(url).origin;
+  } catch {
+    return "";
+  }
+}
+
+// Browsers usually cut the referrer of a cross-site download down to the
+// site root ("https://tr.wikipedia.org/"). With the optional "tabs"
+// permission we can read the full address and title of the tab instead.
+async function sourcePage(item) {
+  const referrer = /^(blob|data):/i.test(item.referrer || "") ? "" : item.referrer || "";
+  const fallback = { url: referrer, title: "" };
+  try {
+    if (!(await chrome.permissions.contains({ permissions: ["tabs"] }))) return fallback;
+    const tabs = await chrome.tabs.query({ lastFocusedWindow: true });
+    const web = tabs.filter((t) => /^https?:/i.test(t.url || ""));
+    const want = originOf(referrer);
+    const active = web.find((t) => t.active);
+    const pick = want
+      ? (active && originOf(active.url) === want ? active : web.find((t) => originOf(t.url) === want))
+      : active;
+    return pick ? { url: pick.url, title: pick.title || "" } : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+// ── Extension of the downloaded file ──
+
+const MIME_EXT = {
+  "image/jpeg": "jpg",
+  "image/jpg": "jpg",
+  "image/png": "png",
+  "image/gif": "gif",
+  "image/webp": "webp",
+  "image/avif": "avif",
+  "image/svg+xml": "svg",
+  "application/pdf": "pdf",
+  "application/zip": "zip",
+  "application/x-zip-compressed": "zip",
+  "text/plain": "txt",
+  "text/csv": "csv",
+};
+
+function getExtension(item) {
+  for (const name of [item.filename, item.suggestedFilename]) {
+    const { ext } = splitExt(name);
     if (ext) return ext;
-  } catch (_) {
+  }
+  try {
+    const { ext } = splitExt(new URL(item.finalUrl || item.url || "").pathname);
+    if (ext) return ext;
+  } catch {
     /* ignore */
   }
-
-  const mimeMap = {
-    "image/jpeg": "jpg",
-    "image/jpg": "jpg",
-    "image/png": "png",
-    "image/gif": "gif",
-    "image/webp": "webp",
-    "image/svg+xml": "svg",
-    "application/pdf": "pdf",
-    "application/zip": "zip",
-    "application/x-zip-compressed": "zip",
-    "text/plain": "txt",
-    "text/csv": "csv",
-  };
-  const mime = item.mime ? item.mime.split(";")[0].trim().toLowerCase() : "";
-  if (mime && mimeMap[mime]) return mimeMap[mime];
-
-  return "";
+  const mime = (item.mime || "").split(";")[0].trim().toLowerCase();
+  return MIME_EXT[mime] || "";
 }
 
-function getSuggestedBasename(item) {
-  if (item.suggestedFilename) {
-    const leaf = String(item.suggestedFilename).split(/[/\\]/).pop();
-    if (leaf) return leaf;
-  }
+function originalName(item) {
+  if (item.suggestedFilename) return item.suggestedFilename;
+  const leaf = (item.filename || "").split(/[/\\]/).pop();
+  if (leaf) return leaf;
   try {
     const u = item.finalUrl || item.url || "";
-    if (!u || u.startsWith("blob:") || u.startsWith("data:")) return "";
-    const pathname = new URL(u).pathname;
-    const parts = pathname.split("/").filter(Boolean);
-    const last = parts.pop();
-    if (!last) return "";
+    if (/^(blob|data):/i.test(u)) return "";
+    const last = new URL(u).pathname.split("/").filter(Boolean).pop() || "";
     try {
       return decodeURIComponent(last);
     } catch {
@@ -126,119 +127,149 @@ function getSuggestedBasename(item) {
   }
 }
 
-function sanitizeWindowsBasename(name) {
-  if (!name || typeof name !== "string") return "";
-  let n = name.split(/[/\\]/).pop().trim();
-  n = n.replace(/[\x00-\x1f<>:"/\\|?*]/g, "_");
-  n = n.replace(/[. ]+$/, "");
-  n = n.replace(/^\.+/, "");
-  if (!n) return "";
-  const stem = n.includes(".") ? n.slice(0, n.lastIndexOf(".")) : n;
-  const stemCheck = stem || n;
-  if (/^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i.test(stemCheck)) {
-    return "file_" + n;
-  }
-  return n;
-}
+// ── Per-project numbering. Downloads can start together, so numbers are
+// handed out one at a time. ──
 
-function nameHasExtensionSegment(name) {
-  return /\.[A-Za-z0-9]{1,12}$/.test(name);
-}
+let numberQueue = Promise.resolve();
 
-function buildTimestampOnlyFilename(downloadItem) {
-  const stamp = formatTimestampStamp();
-  const ext = getExtensionFromDownload(downloadItem);
-  return ext ? `${stamp}.${ext}` : stamp;
-}
-
-function buildSuggestedBody(downloadItem) {
-  const mimeExt = getExtensionFromDownload(downloadItem);
-  const raw = getSuggestedBasename(downloadItem);
-  let body = sanitizeWindowsBasename(raw);
-  if (!body) body = "download";
-  if (mimeExt && !nameHasExtensionSegment(body)) {
-    body = `${body}.${mimeExt}`;
-  }
-  return body;
-}
-
-function buildTimestampOriginalFilename(downloadItem) {
-  const stamp = formatTimestampStamp();
-  const prefix = stamp + "-";
-  let body = buildSuggestedBody(downloadItem);
-  const maxTotal = 200;
-  let out = prefix + body;
-  if (out.length > maxTotal) {
-    const budget = Math.max(1, maxTotal - prefix.length);
-    body = body.slice(0, budget);
-    out = prefix + body;
-  }
-  return out;
-}
-
-function buildOriginalOnlyFilename(downloadItem) {
-  let body = buildSuggestedBody(downloadItem);
-  if (body.length > 200) body = body.slice(0, 200);
-  return body;
-}
-
-const EXT_TO_FOLDER = (() => {
-  const map = {
-    images:   ["jpg","jpeg","png","gif","webp","svg","bmp","ico","tiff","avif","heic"],
-    docs:     ["pdf","doc","docx","xls","xlsx","ppt","pptx","odt","ods","odp","txt","rtf","csv","md"],
-    videos:   ["mp4","mkv","avi","mov","wmv","flv","webm","m4v","3gp"],
-    audio:    ["mp3","flac","wav","ogg","aac","m4a","wma","opus"],
-    archives: ["zip","rar","7z","tar","gz","bz2","xz","tgz"],
-  };
-  const result = {};
-  for (const [folder, exts] of Object.entries(map)) {
-    for (const ext of exts) result[ext] = folder;
-  }
-  return result;
-})();
-
-function buildDownloadFilename(downloadItem) {
-  const mode = settingsCache.filenameMode;
-  if (mode === MODE_TIMESTAMP_ORIGINAL) {
-    return buildTimestampOriginalFilename(downloadItem);
-  }
-  if (mode === MODE_ORIGINAL) {
-    return buildOriginalOnlyFilename(downloadItem);
-  }
-  return buildTimestampOnlyFilename(downloadItem);
-}
-
-chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
-  let filename = buildDownloadFilename(downloadItem);
-
-  if (settingsCache.folderOrganization) {
-    const ext = getExtensionFromDownload(downloadItem);
-    const folder = EXT_TO_FOLDER[ext] || "";
-    if (folder) filename = folder + "/" + filename;
-  }
-
-  suggest({
-    filename,
-    conflictAction: "uniquify",
+function nextNumber(folder) {
+  const key = folder.toLocaleLowerCase();
+  const run = numberQueue.then(async () => {
+    const { projectCounters = {} } = await chrome.storage.local.get("projectCounters");
+    const n = (projectCounters[key] || 0) + 1;
+    projectCounters[key] = n;
+    await chrome.storage.local.set({ projectCounters });
+    return n;
   });
+  numberQueue = run.catch(() => {});
+  return run;
+}
+
+// ── Our own sources-file writes go through the same download pipeline. ──
+
+const ownDownloads = new Map(); // data URL -> target filename
+
+async function decideFilename(item) {
+  if (item.byExtensionId === chrome.runtime.id) {
+    const target = ownDownloads.get(item.url);
+    return target ? { filename: target, conflictAction: "overwrite" } : null;
+  }
+
+  const settings = await getSettings();
+  const project = await resolveProject(settings);
+  const ext = getExtension(item);
+  const name = originalName(item);
+  const page = await sourcePage(item);
+  const pageUrl = page.url;
+  const pageTitle = page.title;
+  const fileUrl = item.finalUrl || item.url || "";
+
+  if (!project) {
+    const loose = buildLooseFilename({ originalName: name, pageUrl, fileUrl, pageTitle, ext });
+    return loose ? { filename: loose, conflictAction: "uniquify" } : null;
+  }
+
+  const folder = projectFolderName(project);
+  const number = await nextNumber(folder);
+  const built = buildProjectPath({ project, number, originalName: name, pageUrl, fileUrl, pageTitle, ext });
+
+  await chrome.storage.session.set({
+    ["pending_" + item.id]: {
+      folder: built.folder,
+      number,
+      file: built.filename.split("/").pop(),
+      original: name,
+      pageTitle,
+      pageUrl,
+      fileUrl: /^(blob|data):/i.test(fileUrl) ? "" : fileUrl,
+    },
+  });
+  return { filename: built.filename, conflictAction: "uniquify" };
+}
+
+chrome.downloads.onDeterminingFilename.addListener((item, suggest) => {
+  decideFilename(item)
+    .then((suggestion) => (suggestion ? suggest(suggestion) : suggest()))
+    .catch(() => suggest());
+  return true;
 });
 
-const LOG_MAX = 200;
+// ── Sources list (_sources.txt / _kaynaklar.txt) ──
 
-function pushDownloadLog(entry) {
-  chrome.storage.local.get({ downloadLog: [] }, (data) => {
-    const prev = Array.isArray(data.downloadLog) ? data.downloadLog : [];
-    const next = [entry, ...prev].slice(0, LOG_MAX);
-    const removedIds = prev.slice(LOG_MAX - 1).map((e) => e.id).filter(Boolean);
-    chrome.storage.local.set({ downloadLog: next });
-    if (removedIds.length) {
-      chrome.storage.local.remove(removedIds.map((id) => "thumb_" + id));
-    }
-  });
+function toDataUrl(text) {
+  const bytes = new TextEncoder().encode("﻿" + text);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return "data:text/plain;charset=utf-8;base64," + btoa(bin);
 }
 
-function saveThumb(downloadId, thumbUrl) {
-  chrome.storage.local.set({ ["thumb_" + downloadId]: thumbUrl });
+const writeTimers = new Map();
+
+function scheduleSourcesWrite(folder) {
+  clearTimeout(writeTimers.get(folder));
+  writeTimers.set(folder, setTimeout(() => {
+    writeTimers.delete(folder);
+    writeSourcesFile(folder);
+  }, 2500));
+}
+
+async function writeSourcesFile(folder) {
+  const { sources = {} } = await chrome.storage.local.get("sources");
+  const entries = sources[folder];
+  if (!entries || !entries.length) return;
+  const url = toDataUrl(sourcesText(folder, entries));
+  const target = `${folder}/${chrome.i18n.getMessage("sourcesFileName")}`;
+  ownDownloads.set(url, target);
+  chrome.downloads.download(
+    { url, filename: target, conflictAction: "overwrite", saveAs: false },
+    () => void chrome.runtime.lastError,
+  );
+}
+
+async function recordSource(item) {
+  const key = "pending_" + item.id;
+  const { [key]: pending } = await chrome.storage.session.get(key);
+  if (!pending) return null;
+  await chrome.storage.session.remove(key);
+  // Chrome falls back to the original name if it rejects our path; then
+  // the file is not in the project folder and must not be listed.
+  const segments = (item.filename || "").split(/[/\\]/);
+  if (segments[segments.length - 2] !== pending.folder) return null;
+  const savedAs = segments[segments.length - 1] || pending.file;
+
+  const { sources = {} } = await chrome.storage.local.get("sources");
+  const list = sources[pending.folder] || [];
+  list.push({
+    number: pending.number,
+    file: savedAs,
+    original: pending.original,
+    pageTitle: pending.pageTitle || "",
+    pageUrl: pending.pageUrl,
+    fileUrl: pending.fileUrl,
+    downloadId: item.id,
+    accessed: new Date().toLocaleString(undefined, {
+      day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit",
+    }),
+  });
+  sources[pending.folder] = list.slice(-SOURCES_MAX);
+  await chrome.storage.local.set({ sources });
+  scheduleSourcesWrite(pending.folder);
+  return pending.folder;
+}
+
+// ── History list and thumbnails ──
+
+async function pushDownloadLog(entry) {
+  const { downloadLog } = await chrome.storage.local.get({ downloadLog: [] });
+  const prev = Array.isArray(downloadLog) ? downloadLog : [];
+  const next = [entry, ...prev].slice(0, LOG_MAX);
+  const removedIds = prev.slice(LOG_MAX - 1).map((e) => e.id).filter(Boolean);
+  await chrome.storage.local.set({ downloadLog: next });
+  if (removedIds.length) {
+    chrome.storage.local.remove(removedIds.map((id) => "thumb_" + id));
+  }
 }
 
 async function ensureOffscreen() {
@@ -249,12 +280,13 @@ async function ensureOffscreen() {
   await chrome.offscreen.createDocument({
     url: "offscreen.html",
     reasons: ["BLOBS"],
-    justification: "Convert downloaded image to data URL for notification",
+    justification: "Make a small preview of a downloaded image",
   });
 }
 
 function filePathToFileUrl(filepath) {
-  return "file:///" + filepath.replace(/\\/g, "/");
+  const p = filepath.replace(/\\/g, "/");
+  return "file://" + (p.startsWith("/") ? "" : "/") + encodeURI(p).replace(/#/g, "%23").replace(/\?/g, "%3F");
 }
 
 function formatBytes(bytes) {
@@ -264,6 +296,7 @@ function formatBytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(1) + " MB";
 }
 
+// Needs "Allow access to file URLs"; quietly returns null without it.
 async function getImageInfo(filePath) {
   try {
     await ensureOffscreen();
@@ -271,11 +304,8 @@ async function getImageInfo(filePath) {
       chrome.runtime.sendMessage(
         { type: "image-to-dataurl", fileUrl: filePathToFileUrl(filePath) },
         (resp) => {
-          if (chrome.runtime.lastError || !resp || resp.error) {
-            resolve(null);
-          } else {
-            resolve(resp);
-          }
+          if (chrome.runtime.lastError || !resp || resp.error) resolve(null);
+          else resolve(resp);
         },
       );
     });
@@ -284,104 +314,71 @@ async function getImageInfo(filePath) {
   }
 }
 
-async function showDownloadDoneNotification(item) {
-  const downloadId = item.id;
-  const fileName =
-    (item.filename || "").split(/[/\\]/).pop() || chrome.i18n.getMessage("downloadedFile");
-  const nid = "hushdown-dl-" + downloadId;
-  const extensionIcon = chrome.runtime.getURL("icons/icon128.png");
-  const mime = (item.mime || "").toLowerCase();
-  const isImage = mime.startsWith("image/");
-
-  const sizeStr = formatBytes(item.fileSize);
-
-  let imageInfo = null;
-  if (isImage && item.filename) {
-    imageInfo = await getImageInfo(item.filename);
-  }
-
-  const imageDataUrl = imageInfo && imageInfo.dataUrl ? imageInfo.dataUrl : null;
-  if (imageInfo && imageInfo.thumbUrl) {
-    saveThumb(downloadId, imageInfo.thumbUrl);
-  }
-
-  let messageParts = [chrome.i18n.getMessage("notifDownloaded")];
+function showNotification(item, fileName, imageInfo, project) {
+  const nid = "hushdown-dl-" + item.id;
+  const iconUrl = chrome.runtime.getURL("icons/icon128.png");
+  const parts = [project ? "📁 " + project : chrome.i18n.getMessage("notifDownloaded")];
   if (imageInfo && imageInfo.width && imageInfo.height) {
-    messageParts.push(imageInfo.width + "×" + imageInfo.height + " px");
+    parts.push(imageInfo.width + "×" + imageInfo.height + " px");
   }
-  if (sizeStr) messageParts.push(sizeStr);
-  const message = messageParts.join(" · ");
+  const size = formatBytes(item.fileSize);
+  if (size) parts.push(size);
+  const base = { iconUrl, title: fileName, message: parts.join(" · "), priority: 0 };
 
-  if (imageDataUrl) {
-    chrome.notifications.create(
-      nid,
-      {
-        type: "image",
-        iconUrl: extensionIcon,
-        imageUrl: imageDataUrl,
-        title: fileName,
-        message: message,
-        priority: 2,
-      },
-      () => {
-        if (chrome.runtime.lastError) {
-          chrome.notifications.create(
-            nid,
-            {
-              type: "basic",
-              iconUrl: extensionIcon,
-              title: fileName,
-              message: message,
-              priority: 2,
-            },
-            () => void chrome.runtime.lastError,
-          );
-        }
-      },
-    );
+  const basic = () =>
+    chrome.notifications.create(nid, { type: "basic", ...base }, () => void chrome.runtime.lastError);
+
+  if (imageInfo && imageInfo.dataUrl) {
+    chrome.notifications.create(nid, { type: "image", imageUrl: imageInfo.dataUrl, ...base }, () => {
+      if (chrome.runtime.lastError) basic();
+    });
   } else {
-    chrome.notifications.create(
-      nid,
-      {
-        type: "basic",
-        iconUrl: extensionIcon,
-        title: fileName,
-        message: message,
-        priority: 2,
-      },
-      () => void chrome.runtime.lastError,
-    );
+    basic();
   }
 }
 
-chrome.downloads.onChanged.addListener((delta) => {
-  if (!delta.state || delta.state.current !== "complete") return;
+async function onDownloadComplete(item) {
+  if (item.byExtensionId === chrome.runtime.id) {
+    // Keep our sources-file rewrites out of Chrome's download list.
+    ownDownloads.delete(item.url);
+    chrome.downloads.erase({ id: item.id }, () => void chrome.runtime.lastError);
+    return;
+  }
 
+  const project = await recordSource(item);
+  const name = (item.filename || "").split(/[/\\]/).pop() || chrome.i18n.getMessage("downloadedFile");
+  const time = new Date().toLocaleString(undefined, {
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
+  });
+  await pushDownloadLog({ id: item.id, name, time, project: project || "" });
+
+  const isImage = (item.mime || "").toLowerCase().startsWith("image/");
+  const imageInfo = isImage && item.filename ? await getImageInfo(item.filename) : null;
+  if (imageInfo && imageInfo.thumbUrl) {
+    chrome.storage.local.set({ ["thumb_" + item.id]: imageInfo.thumbUrl });
+  }
+
+  const { notifications } = await getSettings();
+  if (notifications) showNotification(item, name, imageInfo, project);
+}
+
+chrome.downloads.onChanged.addListener((delta) => {
+  if (!delta.state) return;
+  if (delta.state.current === "interrupted") {
+    chrome.storage.session.remove("pending_" + delta.id);
+    return;
+  }
+  if (delta.state.current !== "complete") return;
   chrome.downloads.search({ id: delta.id }, (results) => {
     if (chrome.runtime.lastError || !results || !results.length) return;
-    const item = results[0];
-    const fullPath = item.filename || "";
-    const name =
-      fullPath.split(/[/\\]/).pop() || chrome.i18n.getMessage("downloadedFile");
-    const timeLabel = new Date().toLocaleString("tr-TR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    pushDownloadLog({ id: item.id, name, time: timeLabel });
-    showDownloadDoneNotification(item);
+    onDownloadComplete(results[0]);
   });
 });
 
 chrome.notifications.onClicked.addListener((notificationId) => {
   const m = /^hushdown-dl-(\d+)/.exec(notificationId);
   if (!m) return;
-  const downloadId = Number(m[1]);
-  if (!Number.isFinite(downloadId)) return;
-  chrome.downloads.show(downloadId, () => {
-    void chrome.runtime.lastError;
-  });
+  chrome.downloads.show(Number(m[1]), () => void chrome.runtime.lastError);
 });
+

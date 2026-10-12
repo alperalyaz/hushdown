@@ -1,1 +1,1 @@
-Rename every Chrome download with a sortable timestamp (yyMMdd-HHmmss). Three naming modes, notifications, and a last-10 list. Free and open source.
+Saves downloads into one folder per project with clear numbered names and an automatic sources list. Free and open source.

@@ -3,49 +3,79 @@
     "message": "HushDown"
   },
   "extDescription": {
-    "message": "Auto-renames downloads with a yyMMdd-HHmmss timestamp. Three modes, folder organization, and searchable history—from the popup."
-  },
-  "filenameModeLabel": {
-    "message": "Filename"
-  },
-  "filenameModeTimestamp": {
-    "message": "Timestamp"
-  },
-  "filenameModeTimestampOriginal": {
-    "message": "Stamp+Name"
-  },
-  "filenameModeOriginal": {
-    "message": "Original"
+    "message": "Sorts downloads into project folders, gives them consistent names and keeps a sources list for you. Built for assignments."
   },
   "helpBtnTitle": {
     "message": "How to use"
   },
-  "last10Heading": {
-    "message": "Last 10 downloads"
+  "projectHeading": {
+    "message": "What I'm working on"
+  },
+  "projectPlaceholder": {
+    "message": "e.g. Biology Essay"
+  },
+  "projectStart": {
+    "message": "Start"
+  },
+  "idleHint": {
+    "message": "Start a project and every download goes into its folder with a running number, and its source is listed for you. With no project, HushDown only fixes meaningless names like \"image931.png\"."
+  },
+  "projectStop": {
+    "message": "Finish"
+  },
+  "showFolder": {
+    "message": "Open folder"
+  },
+  "copySources": {
+    "message": "Copy sources"
+  },
+  "copied": {
+    "message": "Sources copied to clipboard"
+  },
+  "copyFailed": {
+    "message": "Could not copy"
+  },
+  "groupActive": {
+    "message": "This tab is in the \"$1\" group. Downloads from here go to the \"$1\" folder."
+  },
+  "projectCount": {
+    "message": "$1 files · sources list in the folder: $2"
+  },
+  "projectEmpty": {
+    "message": "No files yet. Your next download lands here."
+  },
+  "nextFile": {
+    "message": "Next:"
+  },
+  "useTabGroupsLabel": {
+    "message": "Use tab group names as projects"
+  },
+  "notificationsLabel": {
+    "message": "Notify me when a download finishes"
   },
   "historyHeading": {
     "message": "Downloads"
   },
   "searchPlaceholder": {
-    "message": "Search downloads…"
+    "message": "Search files or projects…"
   },
   "openFolderTitle": {
-    "message": "Open downloads folder"
+    "message": "Open the Downloads folder"
   },
   "openFolderLabel": {
-    "message": "Open folder"
+    "message": "Downloads folder"
   },
   "logEmptyText": {
-    "message": "No downloads yet."
+    "message": "Nothing here yet."
   },
   "fullHistoryLabel": {
     "message": "Full download history"
   },
   "removeFromList": {
-    "message": "Remove from list"
+    "message": "Remove from list (file is kept)"
   },
   "clickToOpen": {
-    "message": "Click to open file"
+    "message": "Click to open the file"
   },
   "downloadedFile": {
     "message": "Downloaded file"
@@ -53,7 +83,34 @@
   "notifDownloaded": {
     "message": "Downloaded"
   },
-  "folderOrganizationLabel": {
-    "message": "Sort into subfolders by type (images, docs, videos…)"
+  "sourcesTitle": {
+    "message": "Sources"
+  },
+  "sourcesNote": {
+    "message": "HushDown updates this list automatically with every download."
+  },
+  "sourcesPage": {
+    "message": "Page"
+  },
+  "sourcesFileUrl": {
+    "message": "File URL"
+  },
+  "sourcesUnknown": {
+    "message": "Source address unknown"
+  },
+  "sourcesAccessed": {
+    "message": "Accessed"
+  },
+  "sourcesFileName": {
+    "message": "_sources.txt"
+  },
+  "permHint": {
+    "message": "Add each page's full address and title to the sources list? Chrome calls this \"read your browsing history\"; HushDown only looks at the tab you download from and sends nothing anywhere."
+  },
+  "permGrant": {
+    "message": "Allow"
+  },
+  "sourcesTitleLabel": {
+    "message": "Title"
   }
 }

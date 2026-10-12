@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HushDown — Welcome</title>
-  <meta name="description" content="HushDown Chrome extension setup guide. Enable notifications, pin the extension, and get the most out of it." />
+  <meta name="description" content="HushDown Chrome extension setup guide. Pin the extension, start a project, and keep every download for your work in one folder with a sources list." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -229,8 +229,8 @@
 <div class="hero">
   <img src="logo.png" alt="HushDown" class="hero-logo" />
   <h1>Welcome — <span>HushDown</span> is installed.</h1>
-  <p>Every new download is silently renamed with a sortable <code>yyMMdd-HHmmss</code> timestamp. Choose between three naming modes, organize files into subfolders by type, and browse a searchable history — all from the popup. Complete the steps below to get the most out of it.</p>
-  <div class="badge">v1.4.1 &nbsp;·&nbsp; <strong>Active</strong></div>
+  <p>HushDown organises your downloads by the work you're doing, not by file type. Tell it what you're working on, and every download goes into that project's folder with a clear, numbered name and an automatic sources list. Complete the steps below to get the most out of it.</p>
+  <div class="badge">v2.0.0 &nbsp;·&nbsp; <strong>Active</strong></div>
 </div>
 
 <div class="container">
@@ -269,7 +269,7 @@
   <div class="section">
     <div class="section-label"><span class="dot"></span>Setup — Step 2</div>
     <h2>Allow Chrome notifications</h2>
-    <p>To receive preview notifications when a download completes, Windows needs permission to show Chrome notifications.</p>
+    <p>Notifications are optional and <strong>off by default</strong>. If you want a notice when a download finishes, tick <strong>"Notify me when a download finishes"</strong> in the HushDown popup; on Windows, Chrome also needs permission to show notifications.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
@@ -299,7 +299,7 @@
   <div class="section">
     <div class="section-label"><span class="dot"></span>Setup — Step 3 (optional)</div>
     <h2>Enable image previews</h2>
-    <p>To see inline previews of downloaded images in notifications and the download list, grant the extension access to local files.</p>
+    <p>To see thumbnails of downloaded images in the history list (and in notifications, if you turned them on), grant the extension access to local files.</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
@@ -329,27 +329,37 @@
   <div class="section">
     <div class="section-label"><span class="dot"></span>How it works</div>
     <h2>What does HushDown do?</h2>
-    <p>It runs quietly in the background — no action needed from you.</p>
+    <p>Say what you're working on once; HushDown files every download for it. Good for a student collecting images, PDFs and notes from many sites for an assignment, or anyone gathering files for a project or client.</p>
     <div class="how-grid">
       <div class="how-card">
-        <div class="icon">⬇️</div>
-        <strong>Three naming modes</strong>
-        <p>Pick a mode in the popup's segment control: <strong>Timestamp</strong> (e.g. <code>260529-235512.png</code>), <strong>Stamp+Name</strong> (timestamp plus original filename), or <strong>Original</strong> (site's suggested name, sanitized). Your preference syncs across Chrome.</p>
+        <div class="icon">✏️</div>
+        <strong>What I'm working on</strong>
+        <p>Type a project name in the popup, for example <strong>Biology Essay</strong>, and press <strong>Start</strong>. Recent projects appear as chips for one-click restart. <strong>Finish</strong> ends the project.</p>
       </div>
       <div class="how-card">
         <div class="icon">📂</div>
-        <strong>Folder organization</strong>
-        <p>Optionally sort downloads into subfolders by file type — images, documents, videos, and more — all inside your normal Downloads folder.</p>
+        <strong>One folder, standard names</strong>
+        <p>While a project is active, every download goes to <code>Downloads/Biology Essay/</code> as <code>biology-essay_001_mitochondrion.png</code>, <code>biology-essay_002_week4-notes.pdf</code> and so on. The number keeps the order you collected things in.</p>
       </div>
       <div class="how-card">
-        <div class="icon">🔔</div>
-        <strong>Preview notifications</strong>
-        <p>A desktop notification appears when a download completes. For images, the picture itself is shown as a preview. Click the notification to reveal the file in its folder.</p>
+        <div class="icon">🏷️</div>
+        <strong>Meaningful names</strong>
+        <p>A useful file name is kept but tidied (<code>Week4 Notes.pdf</code> → <code>week4-notes.pdf</code>). Junk names like <code>image931.png</code> or <code>download (3)</code> are replaced with the page's topic: a file from <code>wikipedia.org/wiki/Mitochondrion</code> becomes <code>mitochondrion</code>.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">📝</div>
+        <strong>Automatic sources list</strong>
+        <p>Each project folder gets <code>_sources.txt</code> listing every file's number, source page, file URL and access date. It updates after each download. The popup can also copy the list (<strong>Copy sources</strong>) and open the folder.</p>
       </div>
       <div class="how-card">
         <div class="icon">🗂️</div>
+        <strong>Tab groups as projects</strong>
+        <p>Put your tabs in a named Chrome tab group and downloads from them go to a folder with the group's name — no popup needed. A named group takes priority over the popup project; you can switch this off.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">🔎</div>
         <strong>Searchable history</strong>
-        <p>Open the extension to browse up to 200 recent downloads with thumbnails for images. Search by filename, click a row to open the file, or use × to remove an entry.</p>
+        <p>The popup lists the last 200 downloads with image thumbnails, each tagged with its project. Search by file or project name, click to open, or use × to remove a row (the file is not deleted).</p>
       </div>
     </div>
   </div>
@@ -361,33 +371,51 @@
     <br />
     <div class="faq">
       <details>
+        <summary>What happens when no project is active?</summary>
+        <div class="answer">HushDown stays out of the way. Normal file names are kept, and only junk names are renamed, as <code>&lt;topic&gt;_&lt;yyMMdd-HHmmss&gt;</code>, for example <code>mitochondrion_261012-140305.png</code>. If the tab is in a named tab group, the group is used as the project.</div>
+      </details>
+      <details>
+        <summary>How do I use tab groups as projects?</summary>
+        <div class="answer">Right-click a tab → <strong>Add tab to new group</strong> and give the group a name. Downloads from tabs in that group go to a folder with the group's name. To turn this off, untick <strong>"Use tab group names as projects"</strong> in the popup.</div>
+      </details>
+      <details>
+        <summary>Where is the sources list saved?</summary>
+        <div class="answer">Inside the project folder, named after your Chrome language: <code>_sources.txt</code> (English), <code>_kaynaklar.txt</code> (Turkish) or <code>_来源.txt</code> (Chinese). It is rewritten after each download and does not appear in Chrome's download list. <strong>Copy sources</strong> in the popup copies the same list to the clipboard.</div>
+      </details>
+      <details>
         <summary>Will my existing files be affected?</summary>
-        <div class="answer">No. HushDown only affects <strong>new downloads</strong>. Files already on your disk are never touched.</div>
+        <div class="answer">No. HushDown only affects <strong>new downloads</strong>. Files already on your disk are never touched, and removing a row from the history list does not delete the file.</div>
       </details>
       <details>
         <summary>How do I change the download location?</summary>
-        <div class="answer">Type <code>chrome://settings/downloads</code> in the address bar and change the <strong>Location</strong>. HushDown always saves files to Chrome's current default download folder.</div>
+        <div class="answer">Type <code>chrome://settings/downloads</code> in the address bar and change the <strong>Location</strong>. HushDown always saves files (and project folders) inside Chrome's current default download folder.</div>
       </details>
       <details>
-        <summary>I get a notification but no image preview.</summary>
+        <summary>Where did the timestamp modes and file-type folders go?</summary>
+        <div class="answer">Version 2.0.0 removed the three timestamp naming modes and the option to sort downloads into folders by file type. Downloads are now organised by project instead.</div>
+      </details>
+      <details>
+        <summary>I see no image thumbnails.</summary>
         <div class="answer">
-          Preview requires local file access.<br /><br />
+          Thumbnails require local file access.<br /><br />
           Go to <strong>chrome://extensions</strong> → HushDown → <strong>Details</strong> → enable <strong>"Allow access to file URLs"</strong>.
         </div>
       </details>
       <details>
-        <summary>Can I turn off notifications?</summary>
-        <div class="answer">Yes — go to Windows Settings → System → Notifications → Google Chrome and turn it off. Note that this disables all Chrome notifications, not just HushDown's.</div>
+        <summary>How do I turn notifications on or off?</summary>
+        <div class="answer">Tick or untick <strong>"Notify me when a download finishes"</strong> in the HushDown popup. They are off by default. If they are on but nothing appears on Windows, check Windows Settings → System → Notifications → Google Chrome.</div>
       </details>
       <details>
         <summary>What permissions does HushDown use?</summary>
         <div class="answer">
-          <strong>downloads</strong> — Set filenames and read download history.<br />
+          <strong>downloads</strong> — Rename new downloads and know when they finish.<br />
           <strong>downloads.open</strong> — Open files from the list.<br />
-          <strong>storage</strong> — Save the download log and thumbnails.<br />
-          <strong>notifications</strong> — Show desktop notifications.<br />
-          <strong>offscreen</strong> — Generate image previews (invisible background page).<br />
-          <strong>file:///*</strong> — Read downloaded images to generate previews (optional, user-granted).
+          <strong>storage</strong> — Save settings, history, the sources list and thumbnails (locally / Chrome sync).<br />
+          <strong>notifications</strong> — Optional download-complete notice.<br />
+          <strong>offscreen</strong> — Make image thumbnails inside the extension.<br />
+          <strong>tabGroups</strong> — Read the name of the active tab's group.<br />
+          <strong>file:///*</strong> — Read downloaded images to make thumbnails (optional, user-granted).<br /><br />
+          <strong>tabs</strong> (optional) — asked once when you start your first project, and only used for the sources list: the full address and title of the tab you download from. Chrome words it as “Read your browsing history”; HushDown only looks at that one tab at download time and sends nothing anywhere. Without it HushDown still works, but browsers often trim the page address to the site root (e.g. https://tr.wikipedia.org/). You can grant it later from the project card.
         </div>
       </details>
     </div>
@@ -401,7 +429,8 @@
     <div class="about-card">
       <p>
         <strong>HushDown</strong> is an experimental digital project by <strong>Hidroteknik</strong>.
-        It is free and open-source, built for anyone who wants a cleaner, quieter download experience.
+        It is free and open source, built for students and anyone who collects files from many sites for a project or client.
+        There are no servers, accounts or ads, and nothing is uploaded: everything stays in your browser and your Downloads folder.
       </p>
       <p>
         Developer: <strong>Alper Alyaz</strong> on behalf of Hidroteknik
